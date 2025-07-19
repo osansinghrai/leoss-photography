@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model contact_page {
+  id        Int    @id @default(autoincrement())
+  full_name String @db.VarChar(255)
+  email     String @db.VarChar(255)
+  messages  String @db.VarChar(255)
+}
+
+model experience_page {
+  id             Int    @id @default(autoincrement())
+  title          String @db.VarChar(255)
+  experience     String @db.VarChar(255)
+  skills         String @db.VarChar(255)
+  awards         String @db.VarChar(255)
+  accomplishment String @db.VarChar(255)
+}
+
+model portfolio_page {
+  id          Int     @id(map: "portfolio_pkey") @default(autoincrement())
+  title       String  @db.VarChar(255)
+  description String?
+  image_url   String
+}
+
+model gallery_page {
+  id        Int    @id(map: "galary_page_pkey") @default(autoincrement())
+  title     String @db.VarChar(255)
+  image_url String
+  category  String @db.VarChar(100)
+}
