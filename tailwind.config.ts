@@ -1,9 +1,13 @@
 module.exports = {
-    theme: {
-        extend: {
-            fontFamily: {
-                marlet: ['Marlet', 'avenir']
-            }
-        }
-    }
-}
+  theme: {
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
+      fontFamily: {
+        marlet: ["Marlet", "avenir"],
+      },
+    },
+  },
+};
