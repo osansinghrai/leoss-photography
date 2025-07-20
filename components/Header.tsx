@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
+import { X, Menu, Search } from "lucide-react";
 
 interface navigateProps {
   label: string;
@@ -15,6 +15,7 @@ const Header = () => {
   const pathName = usePathname();
   const [activeButton, setActiveButton] = React.useState("");
   const [showSearchInput, setShowSearchInput] = React.useState(false);
+  const [showMobileNav, setShowMobileNav] = React.useState(false);
 
   const navButtons = [
     { label: "Home", path: "/" },
@@ -32,6 +33,7 @@ const Header = () => {
   const handleClick = ({ label, path }: navigateProps) => {
     setActiveButton(label);
     router.push(path);
+    setShowMobileNav(false);
   };
 
   const handleBlur = () => {
@@ -39,14 +41,16 @@ const Header = () => {
   };
 
   return (
-    <main className="flex flex-row justify-center items-center pl-16 pt-4 pr-16 pb-2 shadow-md">
+    <main className="flex justify-between items-center pl-16 pt-4 pr-16 pb-2 shadow-md">
       <div>
+        {/* LOGO */}
         <Link href="/">
           <h1 className="marlet-font cursor-pointer text-2xl sm:text-4xl  text-shadow-font">
             LEOSS
           </h1>
         </Link>
       </div>
+      {/* Desktop Nav */}
       <div className="hidden sm:flex sm:justify-center sm:items-center sm:gap-10 sm:ml-auto sm:mr-auto">
         {navButtons.map((item) => (
           <button
@@ -61,7 +65,6 @@ const Header = () => {
           </button>
         ))}
       </div>
-      <div>
       <div className="hidden sm:flex sm:w-[100px] sm:h-[auto] sm:cursor-pointer">
         {showSearchInput ? (
           <input
@@ -74,17 +77,60 @@ const Header = () => {
             className="border-b-2 border-black outline-none text-base pl-1 pr-2 -translate-x-10"
           />
         ) : (
-          <Image
-            src="/search.png"
-            alt="search"
-            width={28}
-            height={28}
+          <Search
+            width={24}
+            height={24}
             onClick={() => setShowSearchInput(true)}
-            className="w-[100px"
-          ></Image>
+            className="w-[100px]"
+          />
         )}
       </div>
-</div>
+      {/* Mobile Nav */}
+      <div className="sm:hidden">
+        <div>
+          <button onClick={() => setShowMobileNav(true)} aria-label="Open menu">
+            <Menu size={28} />
+          </button>
+        </div>
+        <div
+          className={`fixed top-0 right-0 w-80 h-full bg-[#f6f6f6] shadow-lg transform transition-all duration-300 ease-it-out z-50 ${showMobileNav ? "translate-x-0" : "translate-x-full"
+            }`}
+        >
+
+
+          <div className="flex items-center gap-2 cursor-pointer p-1 py-[18px] ">
+            <Search size={22}/>
+            <input
+              type="text"
+              placeholder="Search"
+              autoFocus
+              onBlur={handleBlur}
+              className="w-40 border-b-2 border-black outline-none text-base"
+            />
+            <div className="flex ml-auto ">
+              <button
+                onClick={() => setShowMobileNav(false)}
+                aria-label="Close menu"
+              >
+                <X size={28} />
+              </button>
+            </div>
+          </div>
+
+          <div className="flex flex-col items-start gap-4">
+            {navButtons.map((item) => (
+              <button
+                key={item.label}
+                onClick={() => handleClick(item)}
+                className={`text-base w-full text-left py-2 px-4 ${activeButton === item.label ? "font-bold bg-[#ececec]" : ""
+                  } `}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
     </main>
   );
 };
