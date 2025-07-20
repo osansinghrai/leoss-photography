@@ -39,7 +39,7 @@ const Header = () => {
   };
 
   return (
-    <main className="flex flex-row justify-center items-center ml-16 mt-4 mr-16">
+    <main className="flex flex-row justify-center items-center pl-16 pt-4 pr-16 pb-2 shadow-md">
       <div>
         <Link href="/">
           <h1 className="marlet-font text-4xl cursor-pointer text-shadow-font ">
@@ -52,26 +52,25 @@ const Header = () => {
           <button
             onClick={() => handleClick(item)}
             key={item.label}
-            className={`hover:font-black hover:text-lg transition-all duration-300 ease-in-out cursor-pointer pb-2 border-b-2 ${
-              activeButton === item.label
-                ? "font-black border-black"
-                : "border-transparent"
-            }`}
+            className={`hover:font-black hover:text-xl text-lg transition-all duration-300 ease-in-out cursor-pointer pb-1 border-b-2 ${activeButton === item.label
+              ? "font-black border-black"
+              : "border-transparent"
+              }`}
           >
             {item.label}
           </button>
         ))}
       </div>
-      <div className=" w-[120px] cursor-pointer transition-all duration-300 ease-in-out">
+      <div className="w-[100px] h-[32px] cursor-pointer">
         {showSearchInput ? (
           <input
             type="text"
             placeholder="Search"
             autoFocus
-            width={28}
-            height={28}
+            width={24}
+            height={24}
             onBlur={handleBlur}
-            className="border-b-2 border-black outline-none pl-1 pr-2 -translate-x-10"
+            className="border-b-2 border-black outline-none text-base pl-1 pr-2 -translate-x-10"
           />
         ) : (
           <Image
@@ -80,7 +79,6 @@ const Header = () => {
             width={28}
             height={28}
             onClick={() => setShowSearchInput(true)}
-            
           ></Image>
         )}
       </div>
