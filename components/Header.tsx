@@ -4,7 +4,6 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Menu from "./Menu";
 
 interface navigateProps {
   label: string;
@@ -16,7 +15,6 @@ const Header = () => {
   const pathName = usePathname();
   const [activeButton, setActiveButton] = React.useState("");
   const [showSearchInput, setShowSearchInput] = React.useState(false);
-  const [showSideBar, setShowSideBar] = React.useState(false);
 
   const navButtons = [
     { label: "Home", path: "/" },
@@ -86,7 +84,6 @@ const Header = () => {
           ></Image>
         )}
       </div>
-      <Menu />
 </div>
     </main>
   );
