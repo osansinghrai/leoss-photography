@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Menu from "./Menu";
 
 interface navigateProps {
   label: string;
@@ -15,6 +16,7 @@ const Header = () => {
   const pathName = usePathname();
   const [activeButton, setActiveButton] = React.useState("");
   const [showSearchInput, setShowSearchInput] = React.useState(false);
+  const [showSideBar, setShowSideBar] = React.useState(false);
 
   const navButtons = [
     { label: "Home", path: "/" },
@@ -42,26 +44,27 @@ const Header = () => {
     <main className="flex flex-row justify-center items-center pl-16 pt-4 pr-16 pb-2 shadow-md">
       <div>
         <Link href="/">
-          <h1 className="marlet-font text-4xl cursor-pointer text-shadow-font ">
+          <h1 className="marlet-font cursor-pointer text-2xl sm:text-4xl  text-shadow-font">
             LEOSS
           </h1>
         </Link>
       </div>
-      <div className="flex  justify-center items-center gap-10 ml-auto mr-auto">
+      <div className="hidden sm:flex sm:justify-center sm:items-center sm:gap-10 sm:ml-auto sm:mr-auto">
         {navButtons.map((item) => (
           <button
             onClick={() => handleClick(item)}
             key={item.label}
             className={`hover:font-black hover:text-xl text-lg transition-all duration-300 ease-in-out cursor-pointer pb-1 border-b-2 ${activeButton === item.label
-              ? "font-black border-black"
-              : "border-transparent"
+                ? "font-black border-black"
+                : "border-transparent"
               }`}
           >
             {item.label}
           </button>
         ))}
       </div>
-      <div className="w-[100px] h-[32px] cursor-pointer">
+      <div>
+      <div className="hidden sm:flex sm:w-[100px] sm:h-[auto] sm:cursor-pointer">
         {showSearchInput ? (
           <input
             type="text"
@@ -79,9 +82,12 @@ const Header = () => {
             width={28}
             height={28}
             onClick={() => setShowSearchInput(true)}
+            className="w-[100px"
           ></Image>
         )}
       </div>
+      <Menu />
+</div>
     </main>
   );
 };
