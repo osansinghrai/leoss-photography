@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     const gallery = await prisma.gallery_page.findMany();
     res.status(200).json(gallery);
   } catch (error) {
-    console.error("Fetch error:", err);
+    console.error("Fetch error:", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 });

@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     const experience = await prisma.experience_page.findMany();
     res.status(200).json(experience);
   } catch (error) {
-    console.error("Fetch error:", err);
+    console.error("Fetch error:", error);
     res.status(500).json({ error: "Something went wrong" });
   }
 });
