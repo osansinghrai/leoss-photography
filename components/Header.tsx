@@ -56,7 +56,7 @@ const Header = () => {
           <button
             onClick={() => handleClick(item)}
             key={item.label}
-            className={`hover:font-black hover:text-xl text-lg transition-all duration-300 ease-in-out cursor-pointer pb-1 border-b-2 ${activeButton === item.label
+            className={`hover:font-black hover:text-lg text-base transition-all duration-300 ease-in-out cursor-pointer pb-1 border-b-2 ${activeButton === item.label
                 ? "font-black border-black"
                 : "border-transparent"
               }`}
@@ -81,7 +81,7 @@ const Header = () => {
             width={24}
             height={24}
             onClick={() => setShowSearchInput(true)}
-            className="w-[100px]"
+            className="w-[100px] -translate-y-1"
           />
         )}
       </div>
