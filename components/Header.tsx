@@ -41,7 +41,7 @@ const Header = () => {
   };
 
   return (
-    <main className="flex justify-between items-center pl-16 pt-4 pr-16 pb-2 shadow-md">
+    <main className="flex justify-between items-center px-10 sm-px-16 pt-4 pb-2 shadow-md">
       <div>
         {/* LOGO */}
         <Link href="/">
@@ -56,11 +56,10 @@ const Header = () => {
           <button
             onClick={() => handleClick(item)}
             key={item.label}
-            className={`hover:font-black hover:text-xl text-lg transition-all duration-300 ease-in-out cursor-pointer pb-1 border-b-2 ${
-              activeButton === item.label
+            className={`hover:font-black hover:text-xl text-lg transition-all duration-300 ease-in-out cursor-pointer pb-1 border-b-2 ${activeButton === item.label
                 ? "font-black border-black"
                 : "border-transparent"
-            }`}
+              }`}
           >
             {item.label}
           </button>
@@ -94,9 +93,8 @@ const Header = () => {
           </button>
         </div>
         <div
-          className={`fixed top-0 right-0 w-80 h-full bg-[#f6f6f6] shadow-lg transform transition-all duration-300 ease-it-out z-50 ${
-            showMobileNav ? "translate-x-0" : "translate-x-full"
-          }`}
+          className={`fixed top-0 right-0 w-64 h-full bg-[#f6f6f6] shadow-lg transform transition-all duration-300 ease-it-out z-50 ${showMobileNav ? "translate-x-0" : "translate-x-full"
+            }`}
         >
           <div className="flex items-center gap-2 cursor-pointer p-1 pt-[18px] ">
             <Search size={22} />
@@ -107,7 +105,7 @@ const Header = () => {
               onBlur={handleBlur}
               className="w-40 border-b-2 border-black outline-none text-base"
             />
-            <div className="flex ml-auto ">
+            <div className="flex ml-4 ">
               <button
                 onClick={() => setShowMobileNav(false)}
                 aria-label="Close menu"
@@ -122,9 +120,8 @@ const Header = () => {
               <button
                 key={item.label}
                 onClick={() => handleClick(item)}
-                className={`text-base w-full text-left py-2 px-4 ${
-                  activeButton === item.label ? "font-bold bg-[#ececec]" : ""
-                } `}
+                className={`text-base w-full text-left py-2 px-4 ${activeButton === item.label ? "font-bold bg-[#ececec] py-4" : ""
+                  } `}
               >
                 {item.label}
               </button>
