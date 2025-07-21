@@ -41,7 +41,7 @@ const Header = () => {
   };
 
   return (
-    <main className="flex justify-between items-center px-10 sm:px-16 pt-4 pb-2 shadow-md">
+    <main className="sticky top-0 bottom-0 flex justify-between items-center px-10 bg-[#f6f6f6] sm:px-16 pt-4 pb-2 shadow-md z-50">
       <div>
         {/* LOGO */}
         <Link href="/">
@@ -51,7 +51,7 @@ const Header = () => {
         </Link>
       </div>
       {/* Desktop Nav */}
-      <div className="hidden sm:flex sm:justify-center sm:items-center sm:gap-10 sm:ml-auto sm:mr-auto">
+      <div className="hidden sm:flex sm:justify-center sm:items-center sm:gap-10 sm:ml-auto sm:mr-auto sm:tracking-wide">
         {navButtons.map((item) => (
           <button
             onClick={() => handleClick(item)}

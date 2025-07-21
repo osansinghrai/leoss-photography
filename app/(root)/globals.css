@@ -24,7 +24,7 @@
 
 @font-face {
   font-family: "palatino linotype";
-  src: url("/fonts/palatino.ttf") format("ttf");
+  src: url("/fonts/palatino.ttf") format("truetype");
 }
 
 body {
