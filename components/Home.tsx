@@ -15,7 +15,7 @@ const Home = () => {
       <img
         src="Home-bg.jpg"
         alt="Home"
-        className="w-full h-[94vh] object-cover "
+        className="w-full h-[93.2vh] sm:h-[93.1vh] object-cover "
       />
       <div className="absolute inset-0 flex flex-col gap-4 justify-center items-center text-white text-center -translate-y-20 translate-x-2">
         <p className="text-lg sm:text-3xl w-[24rem] sm:w-[40rem] uppercase tracking-widest font-black">
