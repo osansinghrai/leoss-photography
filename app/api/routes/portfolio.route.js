@@ -1,10 +1,15 @@
 const express = require("express");
+const cors = require("cors");
 const { PrismaClient } = require("../../generated/prisma");
 
-const router = express.Router();
+const app = express();
 const prisma = new PrismaClient();
+const PORT = 3001;
 
-router.get("/", async (req, res) => {
+app.use(cors());
+app.use(express.json());
+
+app.get("/api/portfolio", async (req, res) => {
   try {
     const portfolio = await prisma.portfolio_page.findMany();
     res.status(200).json(portfolio);
@@ -14,7 +19,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+app.post("/api/portfolio", async (req, res) => {
   try {
     const { title, description, image_url } = req.body;
     if (!title || !description || !image_url) {
@@ -32,4 +37,8 @@ router.post("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+})
+
+module.exports = app;

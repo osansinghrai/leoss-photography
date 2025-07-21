@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "backend": "bun backend/server.ts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
