@@ -1,44 +1,35 @@
-const express = require("express");
-const cors = require("cors");
+import { NextResponse } from "next/server";
+
 const { PrismaClient } = require("../../generated/prisma");
 
-const app = express();
 const prisma = new PrismaClient();
-const PORT = 3001;
 
-app.use(cors());
-app.use(express.json());
-
-app.get("/api/portfolio", async (req, res) => {
+export async function GET() {
   try {
     const portfolio = await prisma.portfolio_page.findMany();
-    res.status(200).json(portfolio);
+    return NextResponse.json(portfolio);
   } catch (error) {
     console.error("Fetch error:", error);
-    res.status(500).json({ error: "Something went wrong" });
+    return NextResponse.json({ error: "Failed to fetch portfolio" }, { status: 500 });
   }
-});
+}
 
-app.post("/api/portfolio", async (req, res) => {
+export async function POST(req) {
   try {
-    const { title, description, image_url } = req.body;
+    const { title, description, image_url } =await req.json();
     if (!title || !description || !image_url) {
-      return res.status(400).json({ error: "All fields are required." });
+      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
     }
     const newPortfolio = await prisma.portfolio_page.create({
       data: {
-        title, description, image_url
+        title,
+        description,
+        image_url,
       },
     });
-    res.status(201).json(newPortfolio);
+    return NextResponse.json(newPortfolio, { status: 201 });
   } catch (error) {
     console.error("Post error:", error);
-    res.status(500).json({ error: "Failed to create message" });
+    return NextResponse.json({ error: "Failed to create message" }, { status: 500 });
   }
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-})
-
-module.exports = app;
+}

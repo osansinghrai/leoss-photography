@@ -35,13 +35,18 @@ const page = () => {
 
   return (
     <div>
+      <div>
+        <h1></h1>
+      </div>
+      <div>
       {sections.map((section, index) => (
         <div key={index} className="mb-8">
-          <Image src={section.image_url} alt="image" width={100} height={100}></Image>
+          <Image src="/Home.png" alt="image" width={100} height={100}></Image>
           <h1>{section.title}</h1>
           <p>{section.description}</p>
         </div>
       ))}
+      </div>
     </div>
   );
 };
