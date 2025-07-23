@@ -1,54 +1,54 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect } from "react";
 
 interface sectionProps {
+  id: number;
   title: string;
-  description: string;
+  description?: string;
   image_url: string;
+  image_public_id: string;
 }
 
 const page = () => {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-  const [sections, setSections] = React.useState<sectionProps[]>([]);
+  const [section, setSection] = React.useState<sectionProps[]>([]);
   const [loading, setLoading] = React.useState(true);
 
   useEffect(() => {
-    fetch(`${apiBaseUrl}/api/portfolio`)
+    fetch(`${apiBaseUrl}/api/routes/portfolio`)
       .then((res) => res.json())
       .then((data) => {
-        setSections(data);
+        console.log(data)
+        setSection(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching portfolio data:", error);
         setLoading(false);
       });
+      {}
   }, []);
 
   if (loading) {
     return (
-      <p className="flex justify-center items-center text-center h-[92vh] -translate-y-30 overflow-hidden ">
+      <p className="flex justify-center items-center min-h-[80vh] text-center">
         Loading...
       </p>
     );
   }
 
-  return (
+  return <div>
     <div>
-      <div>
-        <h1></h1>
-      </div>
-      <div>
-      {sections.map((section, index) => (
-        <div key={index} className="mb-8">
-          <Image src="/Home.png" alt="image" width={100} height={100}></Image>
-          <h1>{section.title}</h1>
-          <p>{section.description}</p>
+      {section.map((section, index) => (
+        <div key={index}>
+          <Image src={section.image_url} alt={section.title} width={40} height={40}></Image>
         </div>
       ))}
-      </div>
     </div>
-  );
+  </div>;
 };
 
 export default page;
