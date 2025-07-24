@@ -21,7 +21,7 @@ const page = () => {
     fetch(`${apiBaseUrl}/api/routes/portfolio`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
+        console.log(data);
         setSection(data);
         setLoading(false);
       })
@@ -29,7 +29,8 @@ const page = () => {
         console.error("Error fetching portfolio data:", error);
         setLoading(false);
       });
-      {}
+    {
+    }
   }, []);
 
   if (loading) {
@@ -40,15 +41,43 @@ const page = () => {
     );
   }
 
-  return <div>
-    <div>
-      {section.map((section, index) => (
-        <div key={index}>
-          <Image src={section.image_url} alt={section.title} width={40} height={40}></Image>
+  return (
+    <div className="relative flex flex-col items-center justify-center">
+      <div className="w-[200vw] -translate-x-40 sm:-translate-0 sm:w-full h-[93.5vh] sm:h-full overflow-hidden">
+        <img
+          src="portfolio-bg.jpg"
+          alt="portfolio"
+          className="w-full h-full object-cover"
+        />
+      </div>
+      <div className="absolute top-0 left-0 font-extrabold flex flex-col items-start justify-center min-h-[20rem] sm:min-h-[36rem] pl-10 sm:pl-[16rem] gap-2">
+        <p className="text-xl">Hello there!</p>
+        
+          <p className="font-light text-xl">Welcome to my</p>
+          <h1 className="font-extrabold text-4xl">Leoss Photography</h1>
+        <p className="text-lg w-[18rem] sm:w-[40rem]">
+          From portraits to landscapes, over 5 years of experience has shaped my
+          lens to capture elegance in its purest form.
+        </p>
+        <div className="flex flex-col sm:flex-row">
+          <button>Experience</button>
+          <button>Contact me</button>
         </div>
-      ))}
+      </div>
+      <div>
+        {section.map((section, index) => (
+          <div key={index}>
+            <Image
+              src={section.image_url}
+              alt={section.title}
+              width={40}
+              height={40}
+            ></Image>
+          </div>
+        ))}
+      </div>
     </div>
-  </div>;
+  );
 };
 
 export default page;
