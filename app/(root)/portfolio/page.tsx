@@ -59,7 +59,7 @@ const page = () => {
         <img
           src="portfolio-bg.jpg"
           alt="portfolio"
-          className="w-full h-full object-cover"
+          className="w-full h-full sm:h-[93.5vh] object-cover overflow-hidden"
         />
       </div>
 
