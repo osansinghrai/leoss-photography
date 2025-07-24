@@ -54,7 +54,7 @@ const page = () => {
   }
 
   return (
-    <div className="relative flex flex-col items-center justify-center">
+    <main className="relative flex flex-col">
       <div className="w-[200vw] -translate-x-40 sm:-translate-0 sm:w-full h-[93.5vh] sm:h-full overflow-hidden">
         <img
           src="portfolio-bg.jpg"
@@ -113,19 +113,22 @@ const page = () => {
         </motion.div>
       </div>
 
-      <div>
-        {section.map((section, index) => (
-          <div key={index}>
-            <Image
-              src={section.image_url}
-              alt={section.title}
-              width={40}
-              height={40}
-            ></Image>
-          </div>
-        ))}
+      <div className="px-10 sm:px-16 mt-8">
+        <div>
+          <p>Earlier projects</p>
+          {section.map((section, index) => (
+            <div key={index}>
+              <Image
+                src={section.image_url}
+                alt={section.title}
+                width={40}
+                height={40}
+              ></Image>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 
