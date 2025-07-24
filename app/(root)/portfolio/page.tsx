@@ -50,18 +50,20 @@ const page = () => {
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="absolute top-0 left-0 font-extrabold flex flex-col items-start justify-center min-h-[20rem] sm:min-h-[36rem] pl-10 sm:pl-[16rem] gap-2">
-        <p className="text-xl">Hello there!</p>
-        
-          <p className="font-light text-xl">Welcome to my</p>
-          <h1 className="font-extrabold text-4xl">Leoss Photography</h1>
+      <div className="absolute top-6 left-0 font-extrabold flex flex-col items-start justify-center min-h-[20rem] sm:min-h-[36rem] pl-10 sm:pl-[16rem] gap-2">
+        <p className="font-light text-xl">Welcome to my</p>
+        <h1 className="font-extrabold text-4xl">Leoss Photography</h1>
         <p className="text-lg w-[18rem] sm:w-[40rem]">
           From portraits to landscapes, over 5 years of experience has shaped my
           lens to capture elegance in its purest form.
         </p>
-        <div className="flex flex-col sm:flex-row">
-          <button>Experience</button>
-          <button>Contact me</button>
+        <div className="flex flex-col sm:flex-row gap-4 mt-2">
+          <button className="border-2 border-black bg-black px-6 py-2 rounded-4xl text-white cursor-pointer">
+            Experience
+          </button>
+          <button className="border-2 px-6 py-2 rounded-4xl text-black cursor-pointer">
+            Contact me
+          </button>
         </div>
       </div>
       <div>
