@@ -25,11 +25,13 @@ model experience_page {
 }
 
 model portfolio_page {
-  id               Int     @id(map: "portfolio_pkey") @default(autoincrement())
-  title            String  @db.VarChar(255)
-  description      String?
-  image_url        String
-  image_public_id  String
+  id                        Int     @id(map: "portfolio_pkey") @default(autoincrement())
+  title                     String  @db.VarChar(255)
+  description               String?
+  earlier_image_url         String?
+  recent_image_url          String?
+  earlier_image_public_id   String
+  recent_image_public_id    String
 }
 
 model gallery_page {

@@ -21,39 +21,64 @@ export async function GET() {
 // image
 
 export async function POST(req) {
-  const formData = await req.formData();
-
-  const image = formData.get("image_url");
-
-  const buffer = Buffer.from(await image.arrayBuffer());
-  const imageBase64 = `data:${image.type};base64,${buffer.toString("base64")}`;
-
-  const imageUpload = await cloudinary.uploader.upload(imageBase64, {
-    folder: "portfolio_images",
-  });
-
   try {
-    const title = formData.get("title")?.toString();
-    const description = formData.get("description")?.toString();
-    if (!title || !description || !imageUpload) {
+    const contentType = req.headers.get("content-type");
+    let title, description, earlierBase64, recentBase64;
+
+    if (contentType?.includes("multipart/form-data")) {
+      const formData = await req.formData();
+
+      title = formData.get("title")?.toString();
+      description = formData.get("description")?.toString();
+
+      const earlierImage = formData.get("earlier_image_url");
+      const recentImage = formData.get("recent_image_url");
+
+      const earlierBuffer = Buffer.from(await earlierImage.arrayBuffer());
+      const recentBuffer = Buffer.from(await recentImage.arrayBuffer());
+
+      earlierBase64 = `data:${
+        earlierImage.type
+      };base64,${earlierBuffer.toString("base64")}`;
+      recentBase64 = `data:${recentImage.type};base64,${recentBuffer.toString(
+        "base64"
+      )}`;
+    } else {
+      const body = await req.json();
+      title = body.title;
+      description = body.description;
+      earlierBase64 = body.earlier_image_url;
+      recentBase64 = body.recent_image_url;
+    }
+    if (!title || !description) {
       return NextResponse.json(
         { error: "All fields are required" },
         { status: 400 }
       );
     }
+    const earlierUpload = await cloudinary.uploader.upload(earlierBase64, {
+      folder: "portfolio_images",
+    });
+
+    const recentUpload = await cloudinary.uploader.upload(recentBase64, {
+      folder: "portfolio_images",
+    });
+
     const newPortfolio = await prisma.portfolio_page.create({
       data: {
         title,
         description,
-        image_url: imageUpload.secure_url,
-        image_public_id: imageUpload.public_id,
+        earlier_image_url: earlierUpload.secure_url,
+        recent_image_url: recentUpload.secure_url,
+        earlier_image_public_id: earlierUpload.public_id,
+        recent_image_public_id: recentUpload.public_id,
       },
     });
     return NextResponse.json(newPortfolio, { status: 201 });
   } catch (error) {
     console.error("Post error:", error);
     return NextResponse.json(
-      { error: "Failed to create message" },
+      { error: "Failed to create portfolio" },
       { status: 500 }
     );
   }
@@ -65,17 +90,28 @@ export async function PATCH(req) {
     const id = formData.get("id")?.toString();
     const title = formData.get("title")?.toString();
     const description = formData.get("description")?.toString();
-    const image = formData.get("image_url");
+    const earlierImage = formData.get("earlier_image_url");
+    const recentImage = formData.get("recent_image_url");
 
-    const buffer = Buffer.from(await image.arrayBuffer());
-    const imageBase64 = `data:${image.type};base64,${buffer.toString(
-      "base64"
-    )}`;
+    const earlierBuffer = Buffer.from(await earlierImage.arrayBuffer());
+    const recentBuffer = Buffer.from(await recentImage.arrayBuffer());
 
-    const imageUpload = await cloudinary.uploader.upload(imageBase64, {
+    const earlierBase64 = `data:${
+      earlierImage.type
+    };base64,${earlierBuffer.toString("base64")}`;
+    const recentBase64 = `data:${
+      recentImage.type
+    };base64,${recentBuffer.toString("base64")}`;
+
+    const earlierUpload = await cloudinary.uploader.upload(earlierBase64, {
       folder: "portfolio_images",
     });
-    if (!id || !title || !description || !image) {
+
+    const recentUpload = await cloudinary.uploader.upload(recentBase64, {
+      folder: "portfolio_images",
+    });
+
+    if (!id || !title || !description || !earlierUpload || !recentUpload) {
       return NextResponse.json(
         { error: "All fields are required" },
         { status: 400 }
@@ -86,8 +122,10 @@ export async function PATCH(req) {
       data: {
         title,
         description,
-        image_url: imageUpload.secure_url,
-        image_public_id: imageUpload.public_id,
+        earlier_image_url: earlierUpload.secure_url,
+        recent_image_url: recentUpload.secure_url,
+        earlier_image_public_id: earlierUpload.public_id,
+        recent_image_public_id: recentUpload.public_id,
       },
     });
     return NextResponse.json(updatedPortfolio);
@@ -105,8 +143,11 @@ export async function DELETE(req) {
     const { id } = await req.json();
     const portfolio = await prisma.portfolio_page.findUnique({ where: { id } });
 
-    if (portfolio?.image_public_id) {
-      await cloudinary.uploader.destroy(portfolio.image_public_id);
+    if (portfolio?.earlier_image_public_id) {
+      await cloudinary.uploader.destroy(portfolio.earlier_image_public_id);
+    }
+    if (portfolio?.recent_image_public_id) {
+      await cloudinary.uploader.destroy(portfolio.recent_image_public_id);
     }
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });

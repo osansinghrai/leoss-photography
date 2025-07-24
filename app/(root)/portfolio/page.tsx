@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
@@ -9,8 +8,8 @@ interface sectionProps {
   id: number;
   title: string;
   description?: string;
-  image_url: string;
-  image_public_id: string;
+  earlier_image_url: string,
+  recent_image_url: string,
 }
 
 const page = () => {
@@ -55,7 +54,7 @@ const page = () => {
 
   return (
     <main className="relative flex flex-col">
-      <div className="w-[200vw] -translate-x-40 sm:-translate-0 sm:w-full h-[93.5vh] sm:h-full overflow-hidden">
+      <div className="w-[200vw] -translate-x-94 sm:-translate-0 sm:w-full h-[93.5vh] sm:h-full overflow-hidden">
         <img
           src="portfolio-bg.jpg"
           alt="portfolio"
@@ -100,13 +99,13 @@ const page = () => {
         >
           <button
             onClick={handleExperience}
-            className="border-2 border-black bg-black px-6 py-2 rounded-4xl text-white cursor-pointer"
+            className="border-2 border-black bg-black px-6 py-2 rounded-4xl text-white hover:transition-all hover:duration-400 hover:scale-105 cursor-pointer"
           >
             Experience
           </button>
           <button
             onClick={handleContact}
-            className="border-2 px-6 py-2 rounded-4xl text-black cursor-pointer"
+            className="border-2 px-6 py-2 rounded-4xl text-black hover:transition-all hover:duration-400 hover:scale-105  cursor-pointer"
           >
             Contact me
           </button>
@@ -114,18 +113,22 @@ const page = () => {
       </div>
 
       <div className="px-10 sm:px-16 mt-8">
-        <div>
-          <p>Earlier projects</p>
+        <div className="relative">
+          <div className="flex items-center justify-center">
+            <p className="text-4xl font-extrabold mb-10">Earlier projects</p>
+          </div>
+
+          <div className="grid grid-cols-4 grid-rows-4 gap-4">
           {section.map((section, index) => (
-            <div key={index}>
-              <Image
-                src={section.image_url}
+            <div key={index} className="">
+              <img
+                src={section.earlier_image_url}
                 alt={section.title}
-                width={40}
-                height={40}
-              ></Image>
+                className=" "
+              />
             </div>
-          ))}
+          ))}</div>
+
         </div>
       </div>
     </main>
