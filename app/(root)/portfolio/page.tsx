@@ -53,7 +53,7 @@ const page = () => {
   }
 
   return (
-    <main className="relative flex flex-col">
+    <main className="relative flex flex-col min-h-screen">
       <div className="w-[200vw] -translate-x-94 sm:-translate-0 sm:w-full h-[93.5vh] sm:h-full overflow-hidden">
         <img
           src="portfolio-bg.jpg"
@@ -119,7 +119,13 @@ const page = () => {
             <p className="text-4xl font-extrabold mb-4">Earlier projects</p>
           </div>
 
-          <div className="grid grid-cols-4 gap-4 mx-30 cursor-pointer">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.8 }}
+            className="grid grid-cols-4 gap-4 mx-30 cursor-pointer"
+          >
             {section.map((section, index) => (
               <div
                 key={index}
@@ -138,7 +144,7 @@ const page = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* recent projects */}
@@ -147,7 +153,13 @@ const page = () => {
             <p className="text-4xl font-extrabold mb-4">Recent projects</p>
           </div>
 
-          <div className="grid grid-cols-4 gap-4 mx-30 cursor-pointer">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.8 }}
+            className="grid grid-cols-4 gap-4 mx-30 cursor-pointer"
+          >
             {section.map((section, index) => (
               <div
                 key={index}
@@ -166,7 +178,7 @@ const page = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>
