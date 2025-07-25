@@ -124,7 +124,7 @@ const page = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-4 gap-4 mx-30 cursor-pointer"
+            className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:mx-30 cursor-pointer"
           >
             {section.map((section, index) => (
               <div
@@ -158,7 +158,7 @@ const page = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-4 gap-4 mx-30 cursor-pointer"
+            className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:mx-30 cursor-pointer"
           >
             {section.map((section, index) => (
               <div
