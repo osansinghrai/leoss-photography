@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
+import { div } from "framer-motion/client";
 
 interface sectionProps {
   id: number;
@@ -163,7 +164,16 @@ const page = () => {
                       {section.description}
                     </p>
                     <div className="flex mb-2 rounded-md bg-black text-white group">
-                      <button className=" text-sm relative pl-[12px] pr-8 py-2 rounded-2xl cursor-pointer">
+                      <button
+                        onClick={() =>
+                          handleImageClick({
+                            image: section.earlier_image_url,
+                            title: section.title,
+                            description: section.description,
+                          })
+                        }
+                        className=" text-sm relative pl-[12px] pr-8 py-2 rounded-2xl cursor-pointer"
+                      >
                         View more
                       </button>
                       <ArrowRight className="absolute translate-x-[82px] translate-y-[10px] size-4 transition-transform duration-200 group-hover:translate-x-21 " />
@@ -207,7 +217,16 @@ const page = () => {
                       {section.description}
                     </p>
                     <div className="flex mb-2 rounded-md bg-black text-white group">
-                      <button className=" text-sm relative pl-[12px] pr-8 py-2 rounded-2xl cursor-pointer">
+                      <button
+                        onClick={() =>
+                          handleImageClick({
+                            image: section.earlier_image_url,
+                            title: section.title,
+                            description: section.description,
+                          })
+                        }
+                        className=" text-sm relative pl-[12px] pr-8 py-2 rounded-2xl cursor-pointer"
+                      >
                         View more
                       </button>
                       <ArrowRight className="absolute translate-x-[82px] translate-y-[10px] size-4 transition-transform duration-200 group-hover:translate-x-21 " />
@@ -219,6 +238,23 @@ const page = () => {
           </motion.div>
         </div>
       </div>
+      {selectedImage && (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 flex flex-col justify-center items-center bg-black/60 backdrop-blur-[2px]">
+            <div className="relative bg-white rounded-2xl py-6 px-6 max-w-xl w-full ">
+              <button onClick={closeModal}><X /> </button>
+              
+              <img
+                src={selectedImage.image}
+                alt={selectedImage.title}
+                className="w-full h-auto max-h-[60vh] object-cover"
+              />
+              <h1 className="mt-4 text-2xl font-bold">{selectedImage.title}</h1>
+              <p className="text-gray-700 mt-2">{selectedImage.description}</p>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
