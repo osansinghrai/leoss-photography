@@ -148,7 +148,7 @@ const page = () => {
         </div>
 
         {/* recent projects */}
-        <div className="relative">
+        <div className="relative mb-18">
           <div className="flex items-center justify-center mt-10">
             <p className="text-4xl font-extrabold mb-4">Recent projects</p>
           </div>
