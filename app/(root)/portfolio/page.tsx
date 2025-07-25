@@ -123,16 +123,18 @@ const page = () => {
             {section.map((section, index) => (
               <div
                 key={index}
-                className="shadow-lg rounded-2xl p-4 bg-gray-100 h-[32rem] object-cover"
+                className="rounded-2xl shadow-lg p-4 bg-gray-100 h-[32rem] object-cover"
               >
                 <img
                   src={section.earlier_image_url}
                   alt={section.title}
                   className="w-full h-100 object-cover rounded-2xl space-x-6 hover:scale-102 transition-transform duration-300 cursor-pointer"
                 />
-                <div className="mt-6">
-                  <p className="font-bold text-xl">{section.title}</p>
-                  <p>{section.description}</p>
+                <div className="mt-6 ">
+                  <h1 className="font-bold text-xl">{section.title}</h1>
+                  <p className="text-left tracking-wide text-sm overflow-hidden">
+                    {section.description}
+                  </p>
                 </div>
               </div>
             ))}
@@ -149,7 +151,7 @@ const page = () => {
             {section.map((section, index) => (
               <div
                 key={index}
-                className="shadow-lg rounded-2xl p-4 bg-gray-100 h-[32rem] object-cover"
+                className="rounded-2xl shadow-lg p-4 bg-gray-100 h-[32rem] object-cover"
               >
                 <img
                   src={section.recent_image_url}
@@ -157,8 +159,10 @@ const page = () => {
                   className="w-full h-100 object-cover rounded-2xl space-x-6 hover:scale-102 transition-transform duration-300 cursor-pointer"
                 />
                 <div className="mt-6">
-                  <p className="font-bold text-xl">{section.title}</p>
-                  <p>{section.description}</p>
+                  <h1 className="font-bold text-xl">{section.title}</h1>
+                  <p className="text-left tracking-wide text-sm overflow-hidden">
+                    {section.description}
+                  </p>
                 </div>
               </div>
             ))}
