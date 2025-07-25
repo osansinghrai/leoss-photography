@@ -8,8 +8,8 @@ interface sectionProps {
   id: number;
   title: string;
   description?: string;
-  earlier_image_url: string,
-  recent_image_url: string,
+  earlier_image_url: string;
+  recent_image_url: string;
 }
 
 const page = () => {
@@ -113,22 +113,56 @@ const page = () => {
       </div>
 
       <div className="px-10 sm:px-16 mt-8">
+        {/* earlier projects */}
         <div className="relative">
           <div className="flex items-center justify-center">
-            <p className="text-4xl font-extrabold mb-10">Earlier projects</p>
+            <p className="text-4xl font-extrabold mb-4">Earlier projects</p>
           </div>
 
-          <div className="grid grid-cols-4 grid-rows-4 gap-4">
-          {section.map((section, index) => (
-            <div key={index} className="">
-              <img
-                src={section.earlier_image_url}
-                alt={section.title}
-                className=" "
-              />
-            </div>
-          ))}</div>
+          <div className="grid grid-cols-4 gap-4 mx-30 cursor-pointer">
+            {section.map((section, index) => (
+              <div
+                key={index}
+                className="shadow-lg rounded-2xl p-4 bg-gray-100 h-[32rem] object-cover"
+              >
+                <img
+                  src={section.earlier_image_url}
+                  alt={section.title}
+                  className="w-full h-100 object-cover rounded-2xl space-x-6 hover:scale-102 transition-transform duration-300 cursor-pointer"
+                />
+                <div className="mt-6">
+                  <p className="font-bold text-xl">{section.title}</p>
+                  <p>{section.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
+        {/* recent projects */}
+        <div className="relative">
+          <div className="flex items-center justify-center mt-10">
+            <p className="text-4xl font-extrabold mb-4">Recent projects</p>
+          </div>
+
+          <div className="grid grid-cols-4 gap-4 mx-30 cursor-pointer">
+            {section.map((section, index) => (
+              <div
+                key={index}
+                className="shadow-lg rounded-2xl p-4 bg-gray-100 h-[32rem] object-cover"
+              >
+                <img
+                  src={section.recent_image_url}
+                  alt={section.title}
+                  className="w-full h-100 object-cover rounded-2xl space-x-6 hover:scale-102 transition-transform duration-300 cursor-pointer"
+                />
+                <div className="mt-6">
+                  <p className="font-bold text-xl">{section.title}</p>
+                  <p>{section.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </main>
