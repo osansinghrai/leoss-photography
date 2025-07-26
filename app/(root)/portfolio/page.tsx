@@ -171,9 +171,9 @@ const page = () => {
                     />
                   </div>
                   <div className="mt-6 ">
-                    <h1 className="font-bold text-xl">{section.title}</h1>
+                    <h1 className="font-bold text-xl w-60 overflow-hidden text-ellipsis whitespace-nowrap">{section.title}</h1>
                     <div className="flex justify-between items-center">
-                      <p className="text-left tracking-wide w-36 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                      <p className="text-left tracking-wide w-36 -translate-y-2 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                         {section.description}
                       </p>
                       <div className="flex mb-2 rounded-md bg-black text-white group">
@@ -226,9 +226,9 @@ const page = () => {
                     />
                   </div>
                   <div className="mt-6 ">
-                    <h1 className="font-bold text-xl">{section.title}</h1>
+                    <h1 className="font-bold text-xl w-60 overflow-hidden text-ellipsis whitespace-nowrap">{section.title}</h1>
                     <div className="flex justify-between items-center">
-                      <p className="text-left tracking-wide w-30 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                      <p className="text-left tracking-wide w-30 -translate-y-2 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                         {section.description}
                       </p>
                       <div className="flex mb-2 rounded-md bg-black text-white group">
