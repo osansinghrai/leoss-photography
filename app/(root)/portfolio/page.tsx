@@ -171,7 +171,7 @@ const page = () => {
                 <div className="mt-6 ">
                   <h1 className="font-bold text-xl">{section.title}</h1>
                   <div className="flex justify-between items-center">
-                    <p className="text-left tracking-wide w-30 text-sm overflow-hidden">
+                    <p className="text-left tracking-wide w-36 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                       {section.description}
                     </p>
                     <div className="flex mb-2 rounded-md bg-black text-white group">
@@ -224,7 +224,7 @@ const page = () => {
                 <div className="mt-6 ">
                   <h1 className="font-bold text-xl">{section.title}</h1>
                   <div className="flex justify-between items-center">
-                    <p className="text-left tracking-wide w-30 text-sm overflow-hidden">
+                    <p className="text-left tracking-wide w-30 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                       {section.description}
                     </p>
                     <div className="flex mb-2 rounded-md bg-black text-white group">
@@ -252,7 +252,7 @@ const page = () => {
       {selectedImage && (
         <div onClick={closeModal} className="fixed inset-0 z-50">
           <div className="absolute inset-0 flex flex-col  justify-center items-center bg-black/60 backdrop-blur-[2px] px-6 sm:px-0">
-            <div className="relative bg-white rounded-2xl pb-6 px-1 pt-1 max-w-xl max-h-[80vh] w-full overflow-auto">
+            <div className="relative bg-white rounded-2xl pb-6 px-1 pt-1 max-w-xl max-h-[80vh] w-full overflow-auto ">
               <img
                 src={selectedImage.image}
                 alt={selectedImage.title}
@@ -260,7 +260,7 @@ const page = () => {
               />
               <div className="px-4 mt-4">
                 <h1 className=" text-2xl font-bold">{selectedImage.title}</h1>
-                <p className="text-gray-700 mt-2">
+                <p className="text-gray-700 mt-2 ">
                   {selectedImage.description}
                 </p>
               </div>

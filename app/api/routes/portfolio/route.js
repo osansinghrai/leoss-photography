@@ -86,23 +86,42 @@ export async function POST(req) {
 
 export async function PATCH(req) {
   try {
-    const formData = await req.formData();
-    const id = formData.get("id")?.toString();
-    const title = formData.get("title")?.toString();
-    const description = formData.get("description")?.toString();
-    const earlierImage = formData.get("earlier_image_url");
-    const recentImage = formData.get("recent_image_url");
+    const contentType = req.headers.get("content-type");
+    let id, title, description, earlierBase64, recentBase64;
 
-    const earlierBuffer = Buffer.from(await earlierImage.arrayBuffer());
-    const recentBuffer = Buffer.from(await recentImage.arrayBuffer());
+    if (contentType?.includes("multipart/form-data")) {
+      const formData = await req.formData();
 
-    const earlierBase64 = `data:${
-      earlierImage.type
-    };base64,${earlierBuffer.toString("base64")}`;
-    const recentBase64 = `data:${
-      recentImage.type
-    };base64,${recentBuffer.toString("base64")}`;
+      id = formData.get("id")?.toString();
+      title = formData.get("title")?.toString();
+      description = formData.get("description")?.toString();
 
+      const earlierImage = formData.get("earlier_image_url");
+      const recentImage = formData.get("recent_image_url");
+
+      const earlierBuffer = Buffer.from(await earlierImage.arrayBuffer());
+      const recentBuffer = Buffer.from(await recentImage.arrayBuffer());
+
+      earlierBase64 = `data:${
+        earlierImage.type
+      };base64,${earlierBuffer.toString("base64")}`;
+      recentBase64 = `data:${recentImage.type};base64,${recentBuffer.toString(
+        "base64"
+      )}`;
+    } else {
+      const body = await req.json();
+      id = body.id;
+      title = body.title;
+      description = body.description;
+      earlierBase64 = body.earlier_image_url;
+      recentBase64 = body.recent_image_url;
+    }
+    if (!id || !title || !description) {
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 }
+      );
+    }
     const earlierUpload = await cloudinary.uploader.upload(earlierBase64, {
       folder: "portfolio_images",
     });
@@ -111,14 +130,8 @@ export async function PATCH(req) {
       folder: "portfolio_images",
     });
 
-    if (!id || !title || !description || !earlierUpload || !recentUpload) {
-      return NextResponse.json(
-        { error: "All fields are required" },
-        { status: 400 }
-      );
-    }
-    const updatedPortfolio = await prisma.portfolio_page.update({
-      where: { id },
+    const UpdatePortfolio = await prisma.portfolio_page.update({
+      where: { id: Number(id) },
       data: {
         title,
         description,
@@ -128,9 +141,9 @@ export async function PATCH(req) {
         recent_image_public_id: recentUpload.public_id,
       },
     });
-    return NextResponse.json(updatedPortfolio);
+    return NextResponse.json(UpdatePortfolio, { status: 201 });
   } catch (error) {
-    console.error("Patch error:", error);
+    console.error("Post error:", error);
     return NextResponse.json(
       { error: "Failed to update portfolio" },
       { status: 500 }
@@ -141,7 +154,12 @@ export async function PATCH(req) {
 export async function DELETE(req) {
   try {
     const { id } = await req.json();
-    const portfolio = await prisma.portfolio_page.findUnique({ where: { id } });
+    if (!id) {
+      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+    }
+    const portfolio = await prisma.portfolio_page.findUnique({
+      where: { id: Number(id) },
+    });
 
     if (portfolio?.earlier_image_public_id) {
       await cloudinary.uploader.destroy(portfolio.earlier_image_public_id);
@@ -149,10 +167,7 @@ export async function DELETE(req) {
     if (portfolio?.recent_image_public_id) {
       await cloudinary.uploader.destroy(portfolio.recent_image_public_id);
     }
-    if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
-    }
-    await prisma.portfolio_page.delete({ where: { id } });
+    await prisma.portfolio_page.delete({ where: { id: Number(id) } });
     return NextResponse.json({ message: "Portfolio deleted successfully" });
   } catch (error) {
     console.error("Delete error:", error);
