@@ -48,6 +48,17 @@ const page = () => {
   };
 
   useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [selectedImage]);
+
+  useEffect(() => {
     fetch(`${apiBaseUrl}/api/routes/portfolio`)
       .then((res) => res.json())
       .then((data) => {
@@ -220,7 +231,7 @@ const page = () => {
                       <button
                         onClick={() =>
                           handleImageClick({
-                            image: section.earlier_image_url,
+                            image: section.recent_image_url,
                             title: section.title,
                             description: section.description,
                           })
@@ -239,18 +250,20 @@ const page = () => {
         </div>
       </div>
       {selectedImage && (
-        <div className="fixed inset-0 z-50">
-          <div className="absolute inset-0 flex flex-col justify-center items-center bg-black/60 backdrop-blur-[2px]">
-            <div className="relative bg-white rounded-2xl py-6 px-6 max-w-xl w-full ">
-              <button onClick={closeModal}><X /> </button>
-              
+        <div onClick={closeModal} className="fixed inset-0 z-50">
+          <div className="absolute inset-0 flex flex-col  justify-center items-center bg-black/60 backdrop-blur-[2px] px-6 sm:px-0">
+            <div className="relative bg-white rounded-2xl pb-6 px-1 pt-1 max-w-xl max-h-[80vh] w-full overflow-auto">
               <img
                 src={selectedImage.image}
                 alt={selectedImage.title}
-                className="w-full h-auto max-h-[60vh] object-cover"
+                className="w-full h-auto max-h-[60vh] rounded-2xl object-cover"
               />
-              <h1 className="mt-4 text-2xl font-bold">{selectedImage.title}</h1>
-              <p className="text-gray-700 mt-2">{selectedImage.description}</p>
+              <div className="px-4 mt-4">
+                <h1 className=" text-2xl font-bold">{selectedImage.title}</h1>
+                <p className="text-gray-700 mt-2">
+                  {selectedImage.description}
+                </p>
+              </div>
             </div>
           </div>
         </div>
