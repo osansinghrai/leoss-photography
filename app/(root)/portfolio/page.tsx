@@ -156,43 +156,45 @@ const page = () => {
             transition={{ duration: 0.8 }}
             className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:mx-30"
           >
-            {section.map((section, index) => (
-              <div
-                key={index}
-                className="rounded-2xl shadow-lg p-4 bg-gray-100 h-[32rem] object-cover"
-              >
-                <div className="w-full h-100 overflow-hidden rounded-2xl">
-                  <img
-                    src={section.earlier_image_url}
-                    alt={section.title}
-                    className="w-full h-100 object-cover rounded-2xl space-x-6 hover:scale-105 transition-all duration-1500 cursor-pointer"
-                  />
-                </div>
-                <div className="mt-6 ">
-                  <h1 className="font-bold text-xl">{section.title}</h1>
-                  <div className="flex justify-between items-center">
-                    <p className="text-left tracking-wide w-36 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
-                      {section.description}
-                    </p>
-                    <div className="flex mb-2 rounded-md bg-black text-white group">
-                      <button
-                        onClick={() =>
-                          handleImageClick({
-                            image: section.earlier_image_url,
-                            title: section.title,
-                            description: section.description,
-                          })
-                        }
-                        className=" text-sm relative pl-[12px] pr-8 py-2 rounded-2xl cursor-pointer"
-                      >
-                        View more
-                      </button>
-                      <ArrowRight className="absolute translate-x-[82px] translate-y-[10px] size-4 transition-transform duration-200 group-hover:translate-x-21 " />
+            {section
+              .filter((section) => section.earlier_image_url)
+              .map((section, index) => (
+                <div
+                  key={index}
+                  className="rounded-2xl shadow-lg p-4 bg-gray-100 h-[32rem] object-cover"
+                >
+                  <div className="w-full h-100 overflow-hidden rounded-2xl">
+                    <img
+                      src={section.earlier_image_url}
+                      alt={section.title}
+                      className="w-full h-100 object-cover rounded-2xl space-x-6 hover:scale-105 transition-all duration-1500 cursor-pointer"
+                    />
+                  </div>
+                  <div className="mt-6 ">
+                    <h1 className="font-bold text-xl">{section.title}</h1>
+                    <div className="flex justify-between items-center">
+                      <p className="text-left tracking-wide w-36 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                        {section.description}
+                      </p>
+                      <div className="flex mb-2 rounded-md bg-black text-white group">
+                        <button
+                          onClick={() =>
+                            handleImageClick({
+                              image: section.earlier_image_url,
+                              title: section.title,
+                              description: section.description,
+                            })
+                          }
+                          className=" text-sm relative pl-[12px] pr-8 py-2 rounded-2xl cursor-pointer"
+                        >
+                          View more
+                        </button>
+                        <ArrowRight className="absolute translate-x-[82px] translate-y-[10px] size-4 transition-transform duration-200 group-hover:translate-x-21 " />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </motion.div>
         </div>
 
@@ -209,43 +211,45 @@ const page = () => {
             transition={{ duration: 0.8 }}
             className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:mx-30"
           >
-            {section.map((section, index) => (
-              <div
-                key={index}
-                className="rounded-2xl shadow-lg p-4 bg-gray-100 h-[32rem] object-cover"
-              >
-                <div className="w-full h-100 overflow-hidden rounded-2xl">
-                  <img
-                    src={section.recent_image_url}
-                    alt={section.title}
-                    className="w-full h-100 object-cover rounded-2xl space-x-6 hover:scale-105 transition-all duration-1500 cursor-pointer"
-                  />
-                </div>
-                <div className="mt-6 ">
-                  <h1 className="font-bold text-xl">{section.title}</h1>
-                  <div className="flex justify-between items-center">
-                    <p className="text-left tracking-wide w-30 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
-                      {section.description}
-                    </p>
-                    <div className="flex mb-2 rounded-md bg-black text-white group">
-                      <button
-                        onClick={() =>
-                          handleImageClick({
-                            image: section.recent_image_url,
-                            title: section.title,
-                            description: section.description,
-                          })
-                        }
-                        className=" text-sm relative pl-[12px] pr-8 py-2 rounded-2xl cursor-pointer"
-                      >
-                        View more
-                      </button>
-                      <ArrowRight className="absolute translate-x-[82px] translate-y-[10px] size-4 transition-transform duration-200 group-hover:translate-x-21 " />
+            {section
+              .filter((section) => section.recent_image_url)
+              .map((section, index) => (
+                <div
+                  key={index}
+                  className="rounded-2xl shadow-lg p-4 bg-gray-100 h-[32rem] object-cover"
+                >
+                  <div className="w-full h-100 overflow-hidden rounded-2xl">
+                    <img
+                      src={section.recent_image_url}
+                      alt={section.title}
+                      className="w-full h-100 object-cover rounded-2xl space-x-6 hover:scale-105 transition-all duration-1500 cursor-pointer"
+                    />
+                  </div>
+                  <div className="mt-6 ">
+                    <h1 className="font-bold text-xl">{section.title}</h1>
+                    <div className="flex justify-between items-center">
+                      <p className="text-left tracking-wide w-30 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
+                        {section.description}
+                      </p>
+                      <div className="flex mb-2 rounded-md bg-black text-white group">
+                        <button
+                          onClick={() =>
+                            handleImageClick({
+                              image: section.recent_image_url,
+                              title: section.title,
+                              description: section.description,
+                            })
+                          }
+                          className=" text-sm relative pl-[12px] pr-8 py-2 rounded-2xl cursor-pointer"
+                        >
+                          View more
+                        </button>
+                        <ArrowRight className="absolute translate-x-[82px] translate-y-[10px] size-4 transition-transform duration-200 group-hover:translate-x-21 " />
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </motion.div>
         </div>
       </div>

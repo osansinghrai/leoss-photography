@@ -30,8 +30,8 @@ model portfolio_page {
   description               String?
   earlier_image_url         String?
   recent_image_url          String?
-  earlier_image_public_id   String
-  recent_image_public_id    String
+  earlier_image_public_id   String?
+  recent_image_public_id    String?
 }
 
 model gallery_page {
