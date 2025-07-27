@@ -17,11 +17,11 @@ model contact_page {
 
 model experience_page {
   id             Int    @id @default(autoincrement())
+  year           String
   title          String @db.VarChar(255)
-  experience     String @db.VarChar(255)
-  skills         String @db.VarChar(255)
-  awards         String @db.VarChar(255)
-  accomplishment String @db.VarChar(255)
+  description    String @db.VarChar(255)
+  location       String @db.VarChar(255)
+  category       String @db.VarChar(255)
 }
 
 model portfolio_page {

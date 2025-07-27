@@ -240,7 +240,7 @@ export async function DELETE(req) {
   } catch (error) {
     console.error("Delete error:", error);
     return NextResponse.json(
-      { error: "Failed to delete portfolio" },
+      { error: "Failed to delete portfolio data" },
       { status: 500 }
     );
   }
