@@ -33,7 +33,7 @@ const itemVariants = {
   },
   visible: {
     opacity: 1,
-    y: 0,
+    y: 1,
   },
 };
 
@@ -122,7 +122,7 @@ const page = () => {
           variants={itemVariants}
           initial="hidden"
           animate="visible"
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
           className="mt-2 text-center text-base sm:text-lg w-80 sm:w-full text-gray-700 font-semibold tracking-wide "
         >
           A journey through years of capturing life's most precious moments

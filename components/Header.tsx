@@ -45,7 +45,7 @@ const Header = () => {
       <div>
         {/* LOGO */}
         <Link href="/">
-          <h1 className="marlet-font cursor-pointer text-2xl sm:text-4xl  text-shadow-font">
+          <h1 className="marlet-font cursor-pointer text-2xl sm:text-4xl text-shadow-font tracking-wider">
             LEOSS
           </h1>
         </Link>
