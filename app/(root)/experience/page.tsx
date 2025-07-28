@@ -65,7 +65,7 @@ const page = () => {
           initial="hidden"
           animate="visible"
           transition={{ duration: 0.8 }}
-          className="text-6xl font-black text-gray-900 tracking-wide"
+          className="text-4xl sm:text-6xl font-black text-gray-900 tracking-normal sm:tracking-wide"
         >
           Experience
         </motion.h1>
@@ -75,7 +75,7 @@ const page = () => {
           initial="hidden"
           animate="visible"
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="mt-2 text-lg text-gray-700 font-semibold tracking-wide "
+          className="mt-2 text-center text-base sm:text-lg w-80 sm:w-full text-gray-700 font-semibold tracking-wide "
         >
           A journey through years of capturing life's most precious moments
         </motion.p>
@@ -83,7 +83,7 @@ const page = () => {
 
       {/* Professional Journey */}
       <div className="mx-10 mt-10">
-        <div className="flex flex-col justify-center items-center text-4xl font-bold">
+        <div className="flex flex-col text-center justify-center items-center text-2xl sm:text-4xl font-bold">
           <motion.h1
             variants={itemVariants}
             initial="hidden"
@@ -102,17 +102,17 @@ const page = () => {
           className="relative mt-10 ml-10"
         >
           {/* middle line */}
-          <div className="absolute left-4 sm:left-1/2 transform bg-gray-300 w-0.5 h-full"></div>
+          <div className="absolute -left-14 sm:left-1/2 transform bg-gray-300 w-0.5 h-full"></div>
           {/* Experience Sections */}
           <motion.div>
             <div className="flex flex-col gap-8">
               {sections.map((sections, index) => (
                 <div
                   key={sections.id}
-                  className={`flex flex-col bg-white w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl ${
+                  className={`flex flex-col bg-white w-[23rem] sm:w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl ${
                     index % 2 === 0
-                      ? "self-start ml-[6px]"
-                      : "  self-end mr-[6px]"
+                      ? "sm:self-start -ml-14 sm:ml-[6px]"
+                      : "sm:self-end -ml-14 mr-[6px]"
                   }`}
                 >
                   <div className="flex">
