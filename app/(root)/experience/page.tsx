@@ -244,7 +244,7 @@ const page = () => {
                   initial={{ width: 0 }}
                   whileInView={{ width: `${skill.level}%` }}
                   viewport={{ once: true }}
-                  transition={{ duration: 1, delay: 0.2 }}
+                  transition={{ duration: 2.5, delay: 0.2 }}
                   className="bg-gray-500 h-2 rounded-full"
                 />
               </div>
