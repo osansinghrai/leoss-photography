@@ -1,7 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
+
+interface sectionProps {
+  id: number;
+  year: string;
+  title: string;
+  description: string;
+  location: string;
+  category: string;
+}
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.8 } },
+}
 
 const itemVariants = {
   hidden: {
@@ -15,6 +29,32 @@ const itemVariants = {
 };
 
 const page = () => {
+
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL
+
+  const [sections, setSections] = React.useState<sectionProps[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    fetch(`${apiBaseUrl}/api/routes/experience`)
+      .then((res) => res.json())
+      .then((data) => {
+        setSections(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching experience data:", error);
+        setLoading(false);
+      })
+  }, [])
+
+  if (loading) {
+    return (
+      <p className="flex justify-center items-center min-h-[80vh] text-center">
+        Loading...
+      </p>)
+  }
+
   return (
     <main className="min-h-screen">
       {/* Heading Experience */}
@@ -53,6 +93,15 @@ const page = () => {
             Professional Journey
           </motion.h1>
         </div>
+
+        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="relative mt-10">
+
+          {/* middle line */}
+          <div className="absolute left-4 sm:left-1/2 transform bg-gray-300 w-0.5 h-full"></div>
+          {/* Experience Sections */}
+          <h1>Hello</h1>
+          <h1>Hello</h1>
+        </motion.div>
       </div>
     </main>
   );

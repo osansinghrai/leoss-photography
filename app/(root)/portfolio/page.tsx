@@ -46,6 +46,7 @@ const page = () => {
     setSelectedImage(null);
   };
 
+  // background won't scroll
   useEffect(() => {
     if (selectedImage) {
       document.body.style.overflow = "hidden";
@@ -69,8 +70,6 @@ const page = () => {
         console.error("Error fetching portfolio data:", error);
         setLoading(false);
       });
-    {
-    }
   }, []);
 
   if (loading) {
