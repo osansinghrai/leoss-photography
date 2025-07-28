@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { div } from "framer-motion/client";
+import { MapPin } from "lucide-react";
 
 interface sectionProps {
   id: number;
@@ -82,7 +82,7 @@ const page = () => {
       </div>
 
       {/* Professional Journey */}
-      <div className="mx-10 mt-10">
+      <div className="mx-10 mt-8">
         <div className="flex flex-col text-center justify-center items-center text-2xl sm:text-4xl font-bold">
           <motion.h1
             variants={itemVariants}
@@ -99,7 +99,7 @@ const page = () => {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="relative mt-10 ml-10"
+          className="relative mt-6 ml-10"
         >
           {/* middle line */}
           <div className="absolute -left-14 sm:left-1/2 transform bg-gray-300 w-0.5 h-full"></div>
@@ -109,21 +109,27 @@ const page = () => {
               {sections.map((sections, index) => (
                 <div
                   key={sections.id}
-                  className={`flex flex-col bg-white w-[23rem] sm:w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl ${
-                    index % 2 === 0
-                      ? "sm:self-start -ml-14 sm:ml-[6px]"
-                      : "sm:self-end -ml-14 mr-[6px]"
-                  }`}
+                  className={`flex flex-col bg-white w-[23rem] sm:w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl transform transition-all duration-500 hover:scale-103 ${index % 2 === 0
+                    ? "sm:self-start -ml-14 sm:ml-[6px]"
+                    : "sm:self-end -ml-14 mr-[4px]"
+                    }`}
                 >
-                  <div className="flex">
-                    <p> {sections.year} </p>
-                    <p>{sections.category}</p>
+                  <div className="flex items-center gap-2 cursor-pointer">
+                    <p className="tracking-wide"> {sections.year} </p>
+                    <p className="bg-gray-200 rounded-full text-sm font-medium px-2 py-1">
+                      {sections.category}
+                    </p>
                   </div>
-                  <div>
-                    <h1>{sections.title}</h1>
-                    <p>{sections.description}</p>
-                    <div>
-                      <p>{sections.location}</p>
+                  <div className="flex flex-col gap-1 mt-2">
+                    <h1 className="text-xl">{sections.title}</h1>
+                    <p className="tracking-wide text-left leading-snup ">
+                      {sections.description}
+                    </p>
+                    <div className="flex items-center gap-2 mt-2 cursor-pointer ">
+                      <MapPin size={16} />
+                      <p className="translate-y-[1px] text-sm">
+                        {sections.location}
+                      </p>
                     </div>
                   </div>
                 </div>
