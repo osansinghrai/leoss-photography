@@ -104,37 +104,47 @@ const page = () => {
           {/* middle line */}
           <div className="absolute -left-14 sm:left-1/2 transform bg-gray-300 w-0.5 h-full"></div>
           {/* Experience Sections */}
-          <motion.div>
-            <div className="flex flex-col gap-8">
-              {sections.map((sections, index) => (
-                <div
-                  key={sections.id}
-                  className={`flex flex-col bg-white w-[23rem] sm:w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl transform transition-all duration-500 hover:scale-103 ${index % 2 === 0
+          <motion.div
+            variants={itemVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{
+              delayChildren: 0.2,
+              staggerChildren: 0.4,
+            }}
+            className="flex flex-col gap-8"
+          >
+            {sections.map((sections, index) => (
+              <motion.div
+                variants={itemVariants}
+                transition={{ duration: 0.8 }}
+                key={sections.id}
+                className={`flex flex-col bg-white w-[23rem] sm:w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl transform hover:transition-all hover:duration-500 hover:scale-103 ${
+                  index % 2 === 0
                     ? "sm:self-start -ml-14 sm:ml-[6px]"
                     : "sm:self-end -ml-14 mr-[4px]"
-                    }`}
-                >
-                  <div className="flex items-center gap-2 cursor-pointer">
-                    <p className="tracking-wide"> {sections.year} </p>
-                    <p className="bg-gray-200 rounded-full text-sm font-medium px-2 py-1">
-                      {sections.category}
+                }`}
+              >
+                <div className="flex items-center gap-2 cursor-pointer">
+                  <p className="tracking-wide"> {sections.year} </p>
+                  <p className="bg-gray-200 rounded-full text-sm font-medium px-2 py-1">
+                    {sections.category}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-1 mt-2">
+                  <h1 className="text-xl">{sections.title}</h1>
+                  <p className="tracking-wide text-left leading-snup ">
+                    {sections.description}
+                  </p>
+                  <div className="flex items-center gap-2 mt-2 cursor-pointer ">
+                    <MapPin size={16} />
+                    <p className="translate-y-[1px] text-sm">
+                      {sections.location}
                     </p>
-                  </div>
-                  <div className="flex flex-col gap-1 mt-2">
-                    <h1 className="text-xl">{sections.title}</h1>
-                    <p className="tracking-wide text-left leading-snup ">
-                      {sections.description}
-                    </p>
-                    <div className="flex items-center gap-2 mt-2 cursor-pointer ">
-                      <MapPin size={16} />
-                      <p className="translate-y-[1px] text-sm">
-                        {sections.location}
-                      </p>
-                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
+              </motion.div>
+            ))}
           </motion.div>
         </motion.div>
       </div>
