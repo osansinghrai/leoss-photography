@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { motion } from "framer-motion";
-import { MapPin } from "lucide-react";
+import { delay, motion } from "framer-motion";
+import { MapPin, Camera, Palette, Zap, Trophy, Star } from "lucide-react";
 
 interface sectionProps {
   id: number;
@@ -11,6 +11,14 @@ interface sectionProps {
   description: string;
   location: string;
   category: string;
+}
+
+interface Skills {
+  id: number;
+  name: string;
+  level: number;
+  icon: React.ReactNode;
+  color?: string;
 }
 
 const containerVariants = {
@@ -28,6 +36,46 @@ const itemVariants = {
     y: 0,
   },
 };
+
+const skillData = [
+  {
+    id: 1,
+    name: "Portrait Photography",
+    level: 95,
+    icon: <Camera className="w-5 h-5" />,
+  },
+  {
+    id: 2,
+    name: "Adobe Lightroom",
+    level: 90,
+    icon: <Palette className="w-5 h-5" />,
+    color: "from-gray-600 to-gray-800",
+  },
+  {
+    id: 3,
+    name: "Adobe Photoshop",
+    level: 85,
+    icon: <Zap className="w-5 h-5" />,
+  },
+  {
+    id: 4,
+    name: "Drone Photography",
+    level: 80,
+    icon: <Camera className="w-5 h-5" />,
+  },
+  {
+    id: 5,
+    name: "Wedding Photography",
+    level: 95,
+    icon: <Star className="w-5 h-5" />,
+  },
+  {
+    id: 6,
+    name: "Commercial Photography",
+    level: 88,
+    icon: <Trophy className="w-5 h-5" />,
+  },
+];
 
 const page = () => {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -147,6 +195,67 @@ const page = () => {
             ))}
           </motion.div>
         </motion.div>
+      </div>
+
+      {/* Technical expertise */}
+      <div className="mt-8 sm:mt-16 mx-10 min-h-screen">
+        <div className="flex flex-col text-center justify-center items-center text-2xl sm:text-4xl font-bold">
+          <motion.h1
+            variants={itemVariants}
+            initial="hidden"
+            viewport={{ once: true }}
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            className="tracking-wide font-black"
+          >
+            Technical experitise
+          </motion.h1>
+        </div>
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          viewport={{ once: true }}
+          whileInView="visible"
+          transition={{
+            delayChildren: 0.2,
+            staggerChildren: 0.4,
+          }}
+          className="grid grid-cols-1 sm:grid-cols-3 mt-6 sm:mt-10 gap-6 mx-2 sm:mx-10"
+        >
+          {skillData.map((skill) => (
+            <motion.div
+              key={skill.id}
+              variants={itemVariants}
+              transition={{ duration: 0.5 }}
+              className="flex flex-col h-full py-6 px-6  bg-white border border-gray-200 rounded-2xl"
+            >
+              <div className="flex gap-2 ">
+                <h1 className="bg-gray-200 py-1 px-1 items-center">
+                  {skill.icon}
+                </h1>
+                <h1 className="translate-y-1">{skill.name}</h1>
+              </div>
+              <div className="flex justify-between items-center mt-4 text-sm">
+                <p>Proficiency</p>
+                <p>{skill.level}%</p>
+              </div>
+              <div className="bg-gray-200 mt-2">
+                <motion.div
+                  initial={{ width: 0 }}
+                  whileInView={{ width: `${skill.level}%` }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: 0.2 }}
+                  className="bg-gray-500 h-2 rounded-full"
+                />
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Awards */}
+      <div>
+        
       </div>
     </main>
   );
