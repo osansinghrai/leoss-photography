@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, X } from "lucide-react";
-import { div } from "framer-motion/client";
 
 interface sectionProps {
   id: number;
