@@ -151,13 +151,20 @@ const page = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.8 }}
+            transition={{
+              delayChildren: 0.2,
+              staggerChildren: 0.4,
+            }}
             className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:mx-30"
           >
             {section
               .filter((section) => section.earlier_image_url)
               .map((section, index) => (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
                   key={index}
                   className="rounded-2xl shadow-lg p-4 bg-gray-100 h-[32rem] object-cover"
                 >
@@ -169,7 +176,9 @@ const page = () => {
                     />
                   </div>
                   <div className="mt-6 ">
-                    <h1 className="font-bold text-xl w-60 overflow-hidden text-ellipsis whitespace-nowrap">{section.title}</h1>
+                    <h1 className="font-bold text-xl w-60 overflow-hidden text-ellipsis whitespace-nowrap">
+                      {section.title}
+                    </h1>
                     <div className="flex justify-between items-center">
                       <p className="text-left tracking-wide w-36 -translate-y-2 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                         {section.description}
@@ -191,7 +200,7 @@ const page = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
           </motion.div>
         </div>
@@ -206,13 +215,20 @@ const page = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
-            transition={{ duration: 0.8 }}
+            transition={{
+              delayChildren: 0.2,
+              staggerChildren: 0.4,
+            }}
             className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:mx-30"
           >
             {section
               .filter((section) => section.recent_image_url)
               .map((section, index) => (
-                <div
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
                   key={index}
                   className="rounded-2xl shadow-lg p-4 bg-gray-100 h-[32rem] object-cover"
                 >
@@ -224,7 +240,9 @@ const page = () => {
                     />
                   </div>
                   <div className="mt-6 ">
-                    <h1 className="font-bold text-xl w-60 overflow-hidden text-ellipsis whitespace-nowrap">{section.title}</h1>
+                    <h1 className="font-bold text-xl w-60 overflow-hidden text-ellipsis whitespace-nowrap">
+                      {section.title}
+                    </h1>
                     <div className="flex justify-between items-center">
                       <p className="text-left tracking-wide w-30 -translate-y-2 text-sm overflow-hidden text-ellipsis whitespace-nowrap">
                         {section.description}
@@ -246,7 +264,7 @@ const page = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
           </motion.div>
         </div>
