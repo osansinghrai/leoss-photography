@@ -27,7 +27,7 @@ interface award {
   id: number;
   title: string;
   description: number;
-  year: number,
+  year: number;
   image: string;
   category: string;
 }
@@ -92,7 +92,8 @@ const awardData = [
   {
     id: 1,
     title: "Photo Kathmandu Award",
-    description: "Recognizes outstanding photographic work that demonstrates strong visual storytelling and creative expression.",
+    description:
+      "Recognizes outstanding photographic work that demonstrates strong visual storytelling and creative expression.",
     year: "2024",
     image: "/awards/award1.webp",
     category: "Storytelling",
@@ -100,7 +101,8 @@ const awardData = [
   {
     id: 2,
     title: "Nepa Photo Award",
-    description: "Honors impactful photography that documents social issues, human experiences, and everyday life with depth and clarity.",
+    description:
+      "Honors impactful photography that documents social issues, human experiences, and everyday life with depth and clarity.",
     year: "2023",
     image: "/awards/award2.jpg",
     category: "Documentary",
@@ -108,7 +110,8 @@ const awardData = [
   {
     id: 3,
     title: "National Photography Competition",
-    description: "A prestigious national-level award celebrating technical excellence and compelling visual narratives across diverse subjects.",
+    description:
+      "A prestigious national-level award celebrating technical excellence and compelling visual narratives across diverse subjects.",
     year: "2022",
     image: "/awards/award3.jpg",
     category: "Nature",
@@ -116,12 +119,13 @@ const awardData = [
   {
     id: 4,
     title: "International Mountain Photography Contest",
-    description: "Awards compelling photography that highlights the landscapes, people, and environmental challenges of mountain regions.",
+    description:
+      "Awards compelling photography that highlights the landscapes, people, and environmental challenges of mountain regions.",
     year: "2021",
     image: "/awards/award4.webp",
     category: "Landscapes",
   },
-]
+];
 
 const page = () => {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -213,10 +217,11 @@ const page = () => {
                 variants={itemVariants}
                 transition={{ duration: 0.8 }}
                 key={sections.id}
-                className={`flex flex-col bg-white w-[23rem] sm:w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl transform hover:transition-all hover:duration-500 hover:scale-103 ${index % 2 === 0
-                  ? "sm:self-start -ml-14 sm:ml-[13px]"
-                  : "sm:self-end -ml-14 mr-[11px]"
-                  }`}
+                className={`flex flex-col bg-white w-[23rem] sm:w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl transform hover:transition-all hover:duration-500 hover:scale-103 ${
+                  index % 2 === 0
+                    ? "sm:self-start -ml-14 sm:ml-[13px]"
+                    : "sm:self-end -ml-14 mr-[11px]"
+                }`}
               >
                 <div className="flex items-center gap-2 cursor-pointer">
                   <p className="tracking-wide"> {sections.year} </p>
@@ -272,7 +277,7 @@ const page = () => {
               key={skill.id}
               variants={itemVariants}
               transition={{ duration: 0.5 }}
-              className="flex flex-col h-full py-6 px-6  bg-white border border-gray-200 rounded-2xl"
+              className="flex flex-col h-full py-6 px-6  bg-white border border-gray-200 rounded-2xl transform hover:transition-all hover:duration-500 hover:scale-103"
             >
               <div className="flex gap-2 ">
                 <h1 className="bg-gray-200 py-1 px-1 items-center">
@@ -324,25 +329,31 @@ const page = () => {
           className="grid grid-cols-1 sm:grid-cols-2 mt-6 sm:mt-10 gap-6 mx-2 sm:mx-10"
         >
           {awardData.map((award) => (
-
-            <div className=" flex flex-col bg-white border border-gray-200 rounded-2xl p-6">
-              <div className=" flex justify-center items-center w-[44rem] h-80 rounded-lg object-cover overflow-hidden">
-                <img src={award.image} alt={award.title} className="w-full h-100 object-cover" />
+            <motion.div
+              key={award.id}
+              variants={itemVariants}
+              transition={{ duration: 0.5 }}
+              className="flex flex-col bg-white border border-gray-200 rounded-2xl p-1 transform hover:transition-all hover:duration-600 hover:scale-103"
+            >
+              <div className=" flex justify-center items-center w-full h-80 rounded-2xl object-cover overflow-hidden">
+                <img
+                  src={award.image}
+                  alt={award.title}
+                  className="w-full h-100 object-cover cursor-pointer"
+                />
               </div>
-              <div className="flex items-center justify-between">
-                <p>{award.category}</p>
+              <div className="flex items-center justify-between pt-4 px-6">
+                <p className="py-1 px-2 rounded-full bg-gray-200">
+                  {award.category}
+                </p>
                 <p>{award.year}</p>
               </div>
-              <div>
-                <h1>{award.title}</h1>
-
-                <p>{award.description}</p>
+              <div className="px-6 pt-2">
+                <h1 className="text-lg">{award.title}</h1>
+                <p className="pt-1 pb-4 leading-snug">{award.description}</p>
               </div>
-            </div>
-
+            </motion.div>
           ))}
-
-
         </motion.div>
       </div>
     </main>
