@@ -33,10 +33,3 @@ model portfolio_page {
   earlier_image_public_id   String?
   recent_image_public_id    String?
 }
-
-model gallery_page {
-  id        Int    @id(map: "galary_page_pkey") @default(autoincrement())
-  title     String @db.VarChar(255)
-  image_url String
-  category  String @db.VarChar(100)
-}
