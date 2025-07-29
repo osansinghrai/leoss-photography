@@ -32,7 +32,7 @@ const Home = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="palatino-font tracking-wide flex justify-center text-sm sm:text-base px-6 py-2 border rounded-4xl hover:transition-all hover:duration-200 hover:bg-[#4e4e4e] active:scale-98 cursor-pointer"
+          className="times-new-roman font-black tracking-wide flex justify-center text-sm sm:text-base px-6 py-2 border rounded-4xl hover:transition-all hover:duration-200 hover:bg-[#4e4e4e] active:scale-98 cursor-pointer"
           onClick={handleGetStarted}
         >
           GET STARTED

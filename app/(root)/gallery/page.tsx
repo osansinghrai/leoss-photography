@@ -48,34 +48,44 @@ const page = () => {
   }
 
   return (
-    <main className="min-h-screen">
-      <div className="relative flex justify-end  overflow-hidden">
+    <main>
+      <div className="relative flex justify-end overflow-hidden">
         <img
           src="gallery_bg.png"
           alt="gallery_bg"
-          className="object-cover object-top h-[70vh] w-[90vw]"
+          className="object-cover object-top h-[76vh] translate-x-20 sm:translate-x-0 sm:w-[90vw]"
         />
       </div>
-      <div className="absolute top-[16rem] left-[14rem] z-50">
-        <p className="text-sm tracking-[6px] text-gray-600">{`LAUNCHING SUMMER ${year}`}</p>
-        <h1 className="pt-2 text-7xl times-new-roman font-light">
-          ART GALLERY
-        </h1>
-        <motion.div
+      <div className="absolute top-[12rem] sm:top-[16rem] left-[2rem] sm:left-[14rem] z-50">
+        <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 1 }}
           transition={{ duration: 0.8 }}
-          className="flex flex-col sm:flex-row gap-4 mt-4"
+          className="text-sm tracking-[3px] sm:tracking-[6px] text-gray-600"
+        >{`LAUNCHING SUMMER ${year}`}</motion.p>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="pt-2 text-5xl sm:text-7xl times-new-roman font-light"
+        >
+          ART GALLERY
+        </motion.h1>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 1 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="flex flex-col sm:flex-row gap-4 mt-4 -translate-x-18 sm:-translate-x-0"
         >
           <button
             onClick={getStarted}
-            className="border-2 border-black bg-black px-6 py-2 rounded-4xl text-white hover:transition-all hover:duration-400 hover:scale-105 active:scale-98 cursor-pointer"
+            className="border-2 border-black bg-black mx-[5rem] sm:mx-0 sm:px-6 py-2 rounded-4xl text-white hover:transition-all hover:duration-400 hover:scale-105 active:scale-98 cursor-pointer"
           >
             Get Started
           </button>
           <button
             onClick={handleContact}
-            className="border-2 px-6 py-2 rounded-4xl text-black hover:transition-all hover:duration-400 hover:scale-105 active:scale-98 cursor-pointer"
+            className="border-2 mx-[5rem] sm:mx-0 px-6 py-2 rounded-4xl text-black hover:transition-all hover:duration-400 hover:scale-105 active:scale-98 cursor-pointer"
           >
             Contact me
           </button>
