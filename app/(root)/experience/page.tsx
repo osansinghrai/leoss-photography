@@ -2,7 +2,9 @@
 
 import React, { useEffect } from "react";
 import { delay, motion } from "framer-motion";
-import { MapPin, Camera, Palette, Zap, Trophy, Star } from "lucide-react";
+import { MapPin, Camera, Palette, Zap, Trophy, Star, Key } from "lucide-react";
+import { title } from "process";
+import { desc } from "framer-motion/client";
 
 interface sectionProps {
   id: number;
@@ -19,6 +21,15 @@ interface Skills {
   level: number;
   icon: React.ReactNode;
   color?: string;
+}
+
+interface award {
+  id: number;
+  title: string;
+  description: number;
+  year: number,
+  image: string;
+  category: string;
 }
 
 const containerVariants = {
@@ -76,6 +87,41 @@ const skillData = [
     icon: <Trophy className="w-5 h-5" />,
   },
 ];
+
+const awardData = [
+  {
+    id: 1,
+    title: "Photo Kathmandu Award",
+    description: "Recognizes outstanding photographic work that demonstrates strong visual storytelling and creative expression.",
+    year: "2024",
+    image: "/awards/award1.webp",
+    category: "Storytelling",
+  },
+  {
+    id: 2,
+    title: "Nepa Photo Award",
+    description: "Honors impactful photography that documents social issues, human experiences, and everyday life with depth and clarity.",
+    year: "2023",
+    image: "/awards/award2.jpg",
+    category: "Documentary",
+  },
+  {
+    id: 3,
+    title: "National Photography Competition",
+    description: "A prestigious national-level award celebrating technical excellence and compelling visual narratives across diverse subjects.",
+    year: "2022",
+    image: "/awards/award3.jpg",
+    category: "Nature",
+  },
+  {
+    id: 4,
+    title: "International Mountain Photography Contest",
+    description: "Awards compelling photography that highlights the landscapes, people, and environmental challenges of mountain regions.",
+    year: "2021",
+    image: "/awards/award4.webp",
+    category: "Landscapes",
+  },
+]
 
 const page = () => {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -167,11 +213,10 @@ const page = () => {
                 variants={itemVariants}
                 transition={{ duration: 0.8 }}
                 key={sections.id}
-                className={`flex flex-col bg-white w-[23rem] sm:w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl transform hover:transition-all hover:duration-500 hover:scale-103 ${
-                  index % 2 === 0
-                    ? "sm:self-start -ml-14 sm:ml-[6px]"
-                    : "sm:self-end -ml-14 mr-[4px]"
-                }`}
+                className={`flex flex-col bg-white w-[23rem] sm:w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl transform hover:transition-all hover:duration-500 hover:scale-103 ${index % 2 === 0
+                  ? "sm:self-start -ml-14 sm:ml-[13px]"
+                  : "sm:self-end -ml-14 mr-[11px]"
+                  }`}
               >
                 <div className="flex items-center gap-2 cursor-pointer">
                   <p className="tracking-wide"> {sections.year} </p>
@@ -198,7 +243,7 @@ const page = () => {
       </div>
 
       {/* Technical expertise */}
-      <div className="mt-8 sm:mt-16 mx-10 min-h-screen">
+      <div className="mt-8 sm:mt-16 mx-10">
         <div className="flex flex-col text-center justify-center items-center text-2xl sm:text-4xl font-bold">
           <motion.h1
             variants={itemVariants}
@@ -239,7 +284,7 @@ const page = () => {
                 <p>Proficiency</p>
                 <p>{skill.level}%</p>
               </div>
-              <div className="bg-gray-200 mt-2">
+              <div className="bg-gray-200 mt-2 rounded-full">
                 <motion.div
                   initial={{ width: 0 }}
                   whileInView={{ width: `${skill.level}%` }}
@@ -254,8 +299,51 @@ const page = () => {
       </div>
 
       {/* Awards */}
-      <div>
-        
+      <div className="mt-8 sm:mt-16 mx-10">
+        <div className="flex flex-col text-center justify-center items-center text-2xl sm:text-4xl font-bold">
+          <motion.h1
+            variants={itemVariants}
+            initial="hidden"
+            viewport={{ once: true }}
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            className="tracking-wide font-black"
+          >
+            Awards
+          </motion.h1>
+        </div>
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          viewport={{ once: true }}
+          whileInView="visible"
+          transition={{
+            delayChildren: 0.2,
+            staggerChildren: 0.4,
+          }}
+          className="grid grid-cols-1 sm:grid-cols-2 mt-6 sm:mt-10 gap-6 mx-2 sm:mx-10"
+        >
+          {awardData.map((award) => (
+
+            <div className=" flex flex-col bg-white border border-gray-200 rounded-2xl p-6">
+              <div className=" flex justify-center items-center w-[44rem] h-80 rounded-lg object-cover overflow-hidden">
+                <img src={award.image} alt={award.title} className="w-full h-100 object-cover" />
+              </div>
+              <div className="flex items-center justify-between">
+                <p>{award.category}</p>
+                <p>{award.year}</p>
+              </div>
+              <div>
+                <h1>{award.title}</h1>
+
+                <p>{award.description}</p>
+              </div>
+            </div>
+
+          ))}
+
+
+        </motion.div>
       </div>
     </main>
   );
