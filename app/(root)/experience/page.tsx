@@ -1,10 +1,9 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { delay, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { MapPin, Camera, Palette, Zap, Trophy, Star, Key } from "lucide-react";
-import { title } from "process";
-import { desc } from "framer-motion/client";
+import { useRouter } from "next/navigation";
 
 interface sectionProps {
   id: number;
@@ -26,8 +25,8 @@ interface Skills {
 interface award {
   id: number;
   title: string;
-  description: number;
-  year: number;
+  description: string;
+  year: string;
   image: string;
   category: string;
 }
@@ -48,7 +47,7 @@ const itemVariants = {
   },
 };
 
-const skillData = [
+const skillData: Skills[] = [
   {
     id: 1,
     name: "Portrait Photography",
@@ -88,7 +87,7 @@ const skillData = [
   },
 ];
 
-const awardData = [
+const awardData: award[] = [
   {
     id: 1,
     title: "Photo Kathmandu Award",
@@ -132,6 +131,11 @@ const page = () => {
 
   const [sections, setSections] = React.useState<sectionProps[]>([]);
   const [loading, setLoading] = React.useState(true);
+
+  const router = useRouter();
+  const handleContact = () => {
+    router.push("/contact");
+  };
 
   useEffect(() => {
     fetch(`${apiBaseUrl}/api/routes/experience`)
@@ -355,6 +359,44 @@ const page = () => {
             </motion.div>
           ))}
         </motion.div>
+      </div>
+
+      {/* Ready to create together */}
+      <div className="sm:mx-10 my-16 ">
+        <div className="flex flex-col gap-2 mx-10 py-8 text-center justify-center items-center bg-white rounded-2xl">
+          <motion.h1
+            variants={itemVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-xl sm:text-4xl font-black"
+          >
+            Ready to create together?
+          </motion.h1>
+          <motion.p
+            variants={itemVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="w-[20rem] sm:w-[40rem] text-lg text-gray-700"
+          >
+            Let's bring your vision to life with stunning photography that
+            captures the essence of your story.
+          </motion.p>
+          <motion.button
+            variants={itemVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            onClick={handleContact}
+            className="border-2 border-black bg-black px-6 py-2 rounded-4xl text-white hover:transition-all hover:duration-400 hover:scale-105 cursor-pointer active:scale-98 "
+          >
+            Get In Touch
+          </motion.button>
+        </div>
       </div>
     </main>
   );
