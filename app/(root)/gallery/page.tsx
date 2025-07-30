@@ -139,7 +139,7 @@ const page = () => {
               className="w-full h-auto rounded-2xl object-cover group-hover:scale-103 transition-transform duration-1000"
             />
             <div className="absolute inset-0 flex justify-center items-end  bg-black/20  transition-all duration-300 opacity-0 group-hover:opacity-100 cursor-pointer">
-              <p className="text-white text-lg font-black -translate-y-3 tracking-wider">
+              <p className="text-white text-lg font-black -translate-y-2 tracking-wider">
                 {section.title}
               </p>
             </div>
