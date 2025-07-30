@@ -20,7 +20,7 @@ const page = () => {
   const year = date.getFullYear();
 
   const getStarted = () => {
-    window.scrollTo({ top: 10, behavior: "smooth" });
+    window.scrollTo({ top: 730, behavior: "smooth" });
   };
 
   const handleContact = () => {
@@ -59,7 +59,7 @@ const page = () => {
           className="object-cover object-top h-[76vh] translate-x-20 sm:translate-x-0 sm:w-[90vw]"
         />
       </div>
-      <div className="absolute top-[12rem] sm:top-[16rem] left-[2rem] sm:left-[14rem] z-50">
+      <div className="absolute top-[12rem] sm:top-[16rem] left-[2rem] sm:left-[14rem]">
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 1 }}
@@ -114,18 +114,33 @@ const page = () => {
       </div>
       {/* image */}
 
-      <div className="columns-1 sm:columns-3 gap-2 p-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        viewport={{ once: true }}
+        whileInView={{ opacity: 1, y: 1 }}
+        transition={{
+          delayChildren: 0.2,
+          staggerChildren: 0.4,
+        }}
+        className="columns-1 sm:columns-3 gap-2 px-20 pt-6 pb-12"
+      >
         {section.map((section, index) => (
-          <div key={section.id}
-            className="mb-2 break-inside-avoid">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            viewport={{ once: true }}
+            whileInView={{ opacity: 1, y: 1 }}
+            transition={{ duration: 0.8 }}
+            key={section.id}
+            className="mb-2 break-inside-avoid w-full h-auto rounded-2xl overflow-hidden"
+          >
             <img
               src={section.earlier_image_url || section.recent_image_url}
               alt={section.title}
-              className="w-full h-auto rounded-2xl object-cover"
+              className="w-full h-auto rounded-2xl object-cover cursor-pointer hover:scale-103 transition-transform duration-1000"
             />
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </main>
   );
 };
