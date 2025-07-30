@@ -131,13 +131,18 @@ const page = () => {
             whileInView={{ opacity: 1, y: 1 }}
             transition={{ duration: 0.8 }}
             key={section.id}
-            className="mb-2 break-inside-avoid w-full h-auto rounded-2xl overflow-hidden"
+            className="mb-2 break-inside-avoid w-full h-auto rounded-2xl overflow-hidden group"
           >
             <img
               src={section.earlier_image_url || section.recent_image_url}
               alt={section.title}
-              className="w-full h-auto rounded-2xl object-cover cursor-pointer hover:scale-103 transition-transform duration-1000"
+              className="w-full h-auto rounded-2xl object-cover group-hover:scale-103 transition-transform duration-1000"
             />
+            <div className="absolute inset-0 flex justify-center items-end  bg-black/20  transition-all duration-300 opacity-0 group-hover:opacity-100 cursor-pointer">
+              <p className="text-white text-lg font-black -translate-y-3 tracking-wider">
+                {section.title}
+              </p>
+            </div>
           </motion.div>
         ))}
       </motion.div>
