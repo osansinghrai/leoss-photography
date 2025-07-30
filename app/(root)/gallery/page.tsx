@@ -2,10 +2,13 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { div } from "framer-motion/client";
 
 interface GalleryProps {
-  int: number;
-  image_url: string;
+  id: number;
+  title: string;
+  earlier_image_url: string;
+  recent_image_url: string;
 }
 
 const page = () => {
@@ -34,7 +37,7 @@ const page = () => {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching portfolio data:", error);
+        console.error("Error fetching gallery data:", error);
         setLoading(false);
       });
   }, []);
@@ -90,6 +93,38 @@ const page = () => {
             Contact me
           </button>
         </motion.div>
+      </div>
+      <div className="flex flex-col justify-center items-center mt-12">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 1 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="text-sm tracking-[3px] sm:tracking-[6px] text-gray-600"
+        >
+          ON DISPLAY NOW
+        </motion.p>
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 1 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
+          className="pt-4 text-2xl sm:text-5xl times-new-roman font-light tracking-wider"
+        >
+          Featured Work
+        </motion.h1>
+      </div>
+      {/* image */}
+
+      <div className="columns-1 sm:columns-3 gap-2 p-4">
+        {section.map((section, index) => (
+          <div key={section.id}
+            className="mb-2 break-inside-avoid">
+            <img
+              src={section.earlier_image_url || section.recent_image_url}
+              alt={section.title}
+              className="w-full h-auto rounded-2xl object-cover"
+            />
+          </div>
+        ))}
       </div>
     </main>
   );
