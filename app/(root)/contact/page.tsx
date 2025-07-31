@@ -69,7 +69,7 @@ const page = () => {
             Great vision without great people is irrelevant.
           </p>
           <p className="text-gray-700">Let's work together!</p>
-          <div className="flex flex-col gap-[10px] mt-2 w-[26vw]">
+          <div className="flex flex-col gap-[10px] mt-2 w-full sm:w-[26vw]">
             <input
               type="text"
               aria-label="name"
