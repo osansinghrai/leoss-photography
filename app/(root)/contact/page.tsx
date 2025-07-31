@@ -58,10 +58,38 @@ const page = () => {
             <p>Tinkune, Kathmandu</p>
           </div>
           <div className="flex gap-4 text-gray-800 mt-4">
-            <Facebook className="transition-color duration-300 hover:text-[#007CF7] cursor-pointer" />
-            <Instagram className="transition-color duration-300 hover:text-[#92379D] cursor-pointer" />
-            <Github className="transition-color duration-300 hover:text-[#0D2535] cursor-pointer" />
-            <Linkedin className="transition-color duration-300 hover:text-[#2764AB] cursor-pointer" />
+            <a
+              href="https://www.facebook.com/osan.rai.570533"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {" "}
+              <Facebook className="transition-color duration-300 hover:text-[#007CF7] cursor-pointer" />
+            </a>
+            <a
+              href="https://www.instagram.com/_osanbantawarai/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {" "}
+              <Instagram className="transition-color duration-300 hover:text-[#92379D] cursor-pointer" />
+            </a>
+            <a
+              href="https://github.com/osansinghrai"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {" "}
+              <Github className="transition-color duration-300 hover:text-[#0D2535] cursor-pointer" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/osansinghrai/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {" "}
+              <Linkedin className="transition-color duration-300 hover:text-[#2764AB] cursor-pointer" />
+            </a>
           </div>
         </div>
         <div className="flex flex-col">
