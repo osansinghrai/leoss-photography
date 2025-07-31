@@ -43,7 +43,7 @@ const page = () => {
             animate={{ opacity: 1, y: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             onClick={handleScrollContact}
-            className=" border-2 border-gray-200 mt-[12rem] px-8 py-[10px] rounded-lg tracking-widest text-sm text-white hover:transition-all hover:duration-500 hover:scale-105 hover:bg-white hover:text-black active:scale-98 cursor-pointer"
+            className=" border-2 border-gray-200 mt-[12rem] px-8 py-[10px] rounded-lg tracking-widest text-sm text-white hover:transition-all hover:ease-in-out hover:duration-500 hover:scale-105 hover:bg-white hover:text-black active:scale-98 cursor-pointer"
           >
             Approach
           </motion.button>
