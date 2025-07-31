@@ -115,9 +115,10 @@ const page = () => {
               <select
                 name="booking"
                 id="booking"
+                defaultValue=""
                 className="border border-gray-400 px-1 py-[2px] ml-2 bg-white text-gray-600 cursor-pointer focus:outline-none focus:ring-1 transition-all duration-300"
               >
-                <option value="" disabled selected>
+                <option value=""  disabled>
                   Select a purpose
                 </option>
                 <option value="GeneralInquiry">General Inquiry</option>

@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Camera, Palette, Zap, Trophy, Star, Key } from "lucide-react";
+import { MapPin, Camera, Palette, Zap, Trophy, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface sectionProps {
@@ -29,6 +29,14 @@ interface award {
   year: string;
   image: string;
   category: string;
+}
+
+interface Accomplishment {
+  id: number;
+  title: string;
+  description: string;
+  year: string;
+  icon: React.ReactNode;
 }
 
 const containerVariants = {
@@ -123,6 +131,32 @@ const awardData: award[] = [
     year: "2021",
     image: "/awards/award4.webp",
     category: "Landscapes",
+  },
+];
+
+const accomplishmentData: Accomplishment[] = [
+  {
+    id: 1,
+    title: "Exhibited at International Photo Expo",
+    description:
+      "Selected to showcase my portfolio among top photographers worldwide.",
+    year: "2023",
+    icon: <Camera className="w-6 h-6 text-indigo-600" />,
+  },
+  {
+    id: 2,
+    title: "Guest Speaker at Photography Summit",
+    description: "Spoke about innovative techniques in portrait photography.",
+    year: "2022",
+    icon: <Zap className="w-6 h-6 text-yellow-500" />,
+  },
+  {
+    id: 3,
+    title: "Published in National Geographic",
+    description:
+      "Featured for outstanding nature photography capturing mountain landscapes.",
+    year: "2021",
+    icon: <Palette className="w-6 h-6 text-green-600" />,
   },
 ];
 
@@ -356,6 +390,51 @@ const page = () => {
                 <h1 className="text-lg">{award.title}</h1>
                 <p className="pt-1 pb-4 leading-snug">{award.description}</p>
               </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Accomplishments */}
+      <div className="mt-8 sm:mt-16 mx-10">
+        <div className="flex flex-col text-center justify-center items-center text-2xl sm:text-4xl font-bold">
+          <motion.h1
+            variants={itemVariants}
+            initial="hidden"
+            viewport={{ once: true }}
+            whileInView="visible"
+            transition={{ duration: 0.8 }}
+            className="tracking-wide font-black"
+          >
+            Accomplishments
+          </motion.h1>
+        </div>
+        <motion.div
+          variants={itemVariants}
+          initial="hidden"
+          viewport={{ once: true }}
+          whileInView="visible"
+          transition={{
+            delayChildren: 0.2,
+            staggerChildren: 0.4,
+          }}
+          className="grid grid-cols-1 sm:grid-cols-3 mt-6 sm:mt-10 gap-6 mx-2 sm:mx-10"
+        >
+          {accomplishmentData.map((item) => (
+            <motion.div
+              key={item.id}
+              variants={itemVariants}
+              transition={{ duration: 0.5 }}
+              className="flex flex-col bg-white border border-gray-200 rounded-2xl p-6 transform hover:transition-all hover:duration-600 hover:scale-103"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                {item.icon}
+                <p className="text-gray-700 font-semibold">{item.year}</p>
+              </div>
+              <h2 className="text-lg font-bold mb-2">{item.title}</h2>
+              <p className="text-gray-600 leading-relaxed">
+                {item.description}
+              </p>
             </motion.div>
           ))}
         </motion.div>
