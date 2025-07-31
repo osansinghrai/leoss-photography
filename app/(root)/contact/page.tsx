@@ -97,7 +97,7 @@ const page = () => {
             Great vision without great people is irrelevant.
           </p>
           <p className="text-gray-700">Let's work together!</p>
-          <div className="flex flex-col gap-[10px] mt-2 w-full sm:w-[26vw]">
+          <div className="flex flex-col gap-[10px] mt-[10px] w-full sm:w-[26vw]">
             <input
               type="text"
               aria-label="name"
@@ -110,6 +110,21 @@ const page = () => {
               placeholder="Enter a valid email address"
               className="border border-gray-400 text-gray-600 placeholder:text-gray-400 bg-white py-[6px] px-[10px] rounded-md focus:outline-none focus:ring-1 transition-all duration-300"
             />
+            <div>
+              <label htmlFor="booking">Purpose:</label>
+              <select
+                name="booking"
+                id="booking"
+                className="border border-gray-400 px-1 py-[2px] ml-2 bg-white text-gray-600 cursor-pointer focus:outline-none focus:ring-1 transition-all duration-300"
+              >
+                <option value="" disabled selected>
+                  Select a purpose
+                </option>
+                <option value="GeneralInquiry">General Inquiry</option>
+                <option value="Booking">Booking</option>
+                <option value="Collaboration">Collaboration</option>
+              </select>
+            </div>
             <textarea
               rows={3}
               aria-label="message"
