@@ -10,7 +10,7 @@ datasource db {
 
 model contact_page {
   id        Int    @id @default(autoincrement())
-  full_name String @db.VarChar(255)
+  name String @db.VarChar(255)
   email     String @db.VarChar(255)
   messages  String @db.VarChar(255)
 }
