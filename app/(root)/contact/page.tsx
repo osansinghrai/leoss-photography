@@ -11,30 +11,30 @@ const page = () => {
   return (
     <main>
       <div className="relative flex w-full h-[54rem]">
-        <div className="flex mx-18 mt-60 content-center items-center">
+        <div className="flex mx-10 sm:mx-18 mt-60 content-center items-center">
           <img
             src="contact2.jpg"
             alt="gallery1"
-            className="absolute w-[42rem] h-auto -translate-x-[10px] -translate-y-[38px] rounded-xl object-cover z-20"
+            className="absolute w-[21.5rem] sm:w-[42rem] h-auto sm:-translate-x-[10px] -translate-y-[22rem] sm:-translate-y-[38px] rounded-xl object-cover z-20"
           />
           <img
             src="contact.jpeg"
             alt="gallery2"
-            className="absolute w-[58rem] translate-x-[20rem] -translate-y-[6rem] h-auto rounded-xl object-cover z-30"
+            className="absolute w-[18rem] sm:w-[58rem] h-auto translate-x-[26px] sm:translate-x-[20rem] -translate-y-[6rem]  rounded-xl object-cover z-30"
           />
           <img
             src="contact3.jpeg"
             alt="gallery3"
-            className="absolute w-[48rem] h-auto translate-x-[49rem] -translate-y-[42px] rounded-xl object-cover z-10"
+            className="absolute w-[14rem] sm:w-[48rem] h-auto translate-x-[60px] sm:translate-x-[49rem] translate-y-[8rem] sm:-translate-y-[42px] rounded-xl object-cover z-10"
           />
         </div>
 
-        <div className="absolute flex flex-col justify-center items-center translate-x-[40rem] gap-2 text-white z-50">
+        <div className="absolute flex flex-col justify-center items-center translate-x-1/2 sm:translate-x-[40rem] gap-2 text-white z-40">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 1 }}
             transition={{ duration: 0.8 }}
-            className="times-new-roman text-black text-9xl tracking-wider mt-[84px]"
+            className="times-new-roman text-black text-6xl sm:text-9xl tracking-wider mt-10 sm:mt-[84px]"
           >
             DEPTH
           </motion.h1>
@@ -43,13 +43,13 @@ const page = () => {
             animate={{ opacity: 1, y: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
             onClick={handleScrollContact}
-            className=" border-2 border-gray-200 mt-[12rem] px-8 py-[10px] rounded-lg tracking-widest text-sm text-white hover:transition-all hover:ease-in-out hover:duration-500 hover:scale-105 hover:bg-white hover:text-black active:scale-98 cursor-pointer"
+            className=" border-2 border-gray-200 mt-[20rem] sm:mt-[12rem] px-8 py-[10px] rounded-lg tracking-widest text-sm text-white hover:transition-all hover:ease-in-out hover:duration-500 hover:scale-105 hover:bg-white hover:text-black active:scale-98 cursor-pointer"
           >
             Approach
           </motion.button>
         </div>
       </div>
-      <div className="flex min-h-screen justify-center gap-[10rem] items-center">
+      <div className="flex flex-col-reverse sm:flex-row min-h-screen justify-center gap-[10rem] items-center">
         <div className="flex flex-col">
           <h1 className="text-4xl font-black">Contact Us</h1>
           <div className="flex flex-col mt-2 text-gray-700">
