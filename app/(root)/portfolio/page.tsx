@@ -162,29 +162,32 @@ const page = () => {
       <div className="px-10 sm:px-16 mt-8">
         {/* earlier projects */}
         <div className="relative">
-          <div className="flex items-center justify-center">
+          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center  mx-[15rem] ">
+            <div className="hidden sm:flex sm:w-[100px] sm:h-[auto] sm:-translate-x-[7rem] sm:cursor-pointer">
+              {showSearchInput ? (
+                <input
+                  type="text"
+                  placeholder="Search"
+                  autoFocus
+                  width={24}
+                  height={24}
+                  onBlur={() => setShowSearchInput(false)}
+                  onChange={handleSearch}
+                  className="border-b border-gray-400 outline-none text-base translate-x-[2rem]"
+                />
+              ) : (
+                <Search
+                  width={24}
+                  height={24}
+                  onClick={() => setShowSearchInput(true)}
+                  className="w-[100px]"
+                />
+              )}
+            </div>
             <p className="text-4xl font-extrabold mb-4">Earlier projects</p>
-          </div>
-          <div className="hidden sm:flex sm:justify-start sm:ml-[15rem] sm:w-[100px] sm:h-[auto] sm:-translate-y-[40px] sm:-translate-x-[7rem] sm:cursor-pointer">
-            {showSearchInput ? (
-              <input
-                type="text"
-                placeholder="Search"
-                autoFocus
-                width={24}
-                height={24}
-                onBlur={() => setShowSearchInput(false)}
-                onChange={handleSearch}
-                className="border-b border-gray-400 outline-none text-base translate-x-[2rem]"
-              />
-            ) : (
-              <Search
-                width={24}
-                height={24}
-                onClick={() => setShowSearchInput(true)}
-                className="w-[100px]"
-              />
-            )}
+            <div>
+              <p>SORT:</p>
+            </div>
           </div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
