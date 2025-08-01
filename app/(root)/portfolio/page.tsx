@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 interface sectionProps {
   id: number;
@@ -21,7 +22,6 @@ interface ImageProps {
 
 const page = () => {
   const router = useRouter();
-
   const handleExperience = () => {
     router.push("/experience");
   };
@@ -31,11 +31,19 @@ const page = () => {
   };
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-
+  const searchParams = useSearchParams();
   const [section, setSection] = React.useState<sectionProps[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [searchTerm, setSearchTerm] = React.useState(
+    searchParams?.get("search") || ""
+  );
+  const [showSearchInput, setShowSearchInput] = React.useState(false);
   const [selectedImage, setSelectedImage] = React.useState<ImageProps | null>(
     null
+  );
+
+  const filteredSections = section.filter((item) =>
+    item.title.toLowerCase().includes(searchTerm)
   );
 
   const handleImageClick = ({ image, title, description }: ImageProps) => {
@@ -44,6 +52,17 @@ const page = () => {
 
   const closeModal = () => {
     setSelectedImage(null);
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+    const params = new URLSearchParams(searchParams.toString());
+    if (value) {
+      params.set("search", value);
+    } else {
+      params.delete("search");
+    }
   };
 
   // background won't scroll
@@ -146,7 +165,27 @@ const page = () => {
           <div className="flex items-center justify-center">
             <p className="text-4xl font-extrabold mb-4">Earlier projects</p>
           </div>
-
+          <div className="hidden sm:flex sm:justify-start sm:ml-[15rem] sm:w-[100px] sm:h-[auto] sm:-translate-y-[40px] sm:-translate-x-[7rem] sm:cursor-pointer">
+            {showSearchInput ? (
+              <input
+                type="text"
+                placeholder="Search"
+                autoFocus
+                width={24}
+                height={24}
+                onBlur={() => setShowSearchInput(false)}
+                onChange={handleSearch}
+                className="border-b border-gray-400 outline-none text-base translate-x-[2rem]"
+              />
+            ) : (
+              <Search
+                width={24}
+                height={24}
+                onClick={() => setShowSearchInput(true)}
+                className="w-[100px]"
+              />
+            )}
+          </div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -157,7 +196,7 @@ const page = () => {
             }}
             className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:mx-30"
           >
-            {section
+            {filteredSections
               .filter((section) => section.earlier_image_url)
               .map((section, index) => (
                 <motion.div
@@ -221,7 +260,7 @@ const page = () => {
             }}
             className="grid grid-cols-1 sm:grid-cols-4 gap-4 sm:mx-30"
           >
-            {section
+            {filteredSections
               .filter((section) => section.recent_image_url)
               .map((section, index) => (
                 <motion.div
