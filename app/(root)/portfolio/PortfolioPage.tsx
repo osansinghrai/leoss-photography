@@ -42,9 +42,9 @@ const page = () => {
         null
     );
 
-    const filteredSections = section.filter((item) =>
-        item.title.toLowerCase().includes(searchTerm)
-    );
+    const filteredSections = Array.isArray(section) ? section.filter((item) =>
+        item.title.toLowerCase().includes(searchTerm)) : []
+        ;
 
     const handleImageClick = ({ image, title, description }: ImageProps) => {
         setSelectedImage({ image, title, description });
