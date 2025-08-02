@@ -78,7 +78,6 @@ const page = () => {
     }, [selectedImage]);
 
     useEffect(() => {
-        console.log(`${apiBaseUrl}/api/routes/portfolio`)
         fetch(`${apiBaseUrl}/api/routes/portfolio`)
             .then((res) => res.json())
             .then((data) => {
