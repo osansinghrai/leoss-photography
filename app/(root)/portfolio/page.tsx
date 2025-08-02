@@ -1,5 +1,6 @@
 "use client";
 
+export const dynamic = 'force-dynamic';
 import { useRouter } from "next/navigation";
 import React, { Suspense, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -100,7 +101,6 @@ const page = () => {
   }
 
   return (
-    <Suspense>
       <main className="relative flex flex-col min-h-screen">
         <div className="w-[200vw] -translate-x-94 sm:-translate-0 sm:w-full h-[93.5vh] sm:h-full overflow-hidden">
           <img
@@ -332,7 +332,6 @@ const page = () => {
           </div>
         )}
       </main>
-    </Suspense>
   );
 };
 
