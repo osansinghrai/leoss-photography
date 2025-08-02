@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { Suspense, useEffect } from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, Search } from "lucide-react";
 import { useSearchParams } from "next/navigation";
