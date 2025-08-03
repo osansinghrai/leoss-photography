@@ -3,15 +3,7 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  ArrowDown,
-  ArrowRight,
-  ChevronDown,
-  Feather,
-  FeatherIcon,
-  Search,
-  SortAsc,
-} from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { select } from "framer-motion/client";
 

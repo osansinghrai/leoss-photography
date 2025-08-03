@@ -15,6 +15,9 @@ const page = () => {
   const router = useRouter();
   const [section, setSection] = React.useState<GalleryProps[]>([]);
   const [loading, setLoading] = React.useState(true);
+  const [sortTitle, setSortTitle] = React.useState<"none" | "asc" | "desc">(
+    "none"
+  );
 
   const date = new Date();
   const year = date.getFullYear();
@@ -112,6 +115,20 @@ const page = () => {
           Featured Work
         </motion.h1>
       </div>
+      <div className="flex justify-center mt-[10px] sm:mt-0 sm:justify-end gap-1 sm:-translate-x-24 sm:-translate-y-4">
+        <label htmlFor="Sort">SORT:</label>
+        <select
+          name="sort"
+          id="sort"
+          className="text-sm outline-none"
+          value={sortTitle}
+          onChange={() => setSortTitle(sortTitle === "asc" ? "desc" : "asc")}
+        >
+          <option value="none">none</option>
+          <option value="asc">A - Z</option>
+          <option value="desc">Z - A</option>
+        </select>
+      </div>
       {/* image */}
 
       <motion.div
@@ -122,29 +139,37 @@ const page = () => {
           delayChildren: 0.2,
           staggerChildren: 0.4,
         }}
-        className="columns-1 sm:columns-3 gap-2 px-20 pt-6 pb-12"
+        className="columns-1 sm:columns-3 gap-2 px-12 sm:px-20 pt-6 pb-12"
       >
-        {section.map((section, index) => (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            viewport={{ once: true }}
-            whileInView={{ opacity: 1, y: 1 }}
-            transition={{ duration: 0.8 }}
-            key={section.id}
-            className="mb-2 break-inside-avoid w-full h-auto rounded-2xl overflow-hidden group"
-          >
-            <img
-              src={section.earlier_image_url || section.recent_image_url}
-              alt={section.title}
-              className="w-full h-auto rounded-2xl object-cover group-hover:scale-103 transition-transform duration-1000"
-            />
-            <div className="absolute inset-0 flex justify-center items-end  bg-black/20  transition-all duration-300 opacity-0 group-hover:opacity-100 cursor-pointer">
-              <p className="text-white text-lg font-black -translate-y-2 tracking-wider">
-                {section.title}
-              </p>
-            </div>
-          </motion.div>
-        ))}
+        {section
+          .sort((a, b) =>
+            sortTitle === "asc"
+              ? a.title.localeCompare(b.title)
+              : sortTitle === "desc"
+              ? b.title.localeCompare(a.title)
+              : 0
+          )
+          .map((section, index) => (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 1 }}
+              transition={{ duration: 0.8 }}
+              key={section.id}
+              className="mb-2 break-inside-avoid w-full h-auto rounded-2xl overflow-hidden group"
+            >
+              <img
+                src={section.earlier_image_url || section.recent_image_url}
+                alt={section.title}
+                className="w-full h-auto rounded-2xl object-cover group-hover:scale-103 transition-transform duration-1000"
+              />
+              <div className="absolute inset-0 flex justify-center items-end  bg-black/20  transition-all duration-300 opacity-0 group-hover:opacity-100 cursor-pointer">
+                <p className="text-white text-lg font-black -translate-y-2 tracking-wider">
+                  {section.title}
+                </p>
+              </div>
+            </motion.div>
+          ))}
       </motion.div>
     </main>
   );
