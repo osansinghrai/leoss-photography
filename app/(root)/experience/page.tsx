@@ -257,8 +257,8 @@ const page = () => {
                 key={sections.id}
                 className={`flex flex-col bg-white w-[23rem] sm:w-[48rem] h-full py-4 px-6 border border-gray-200 rounded-xl transform hover:transition-all hover:duration-500 hover:scale-103 ${
                   index % 2 === 0
-                    ? "sm:self-start -ml-14 sm:ml-[13px]"
-                    : "sm:self-end -ml-14 mr-[11px]"
+                    ? "sm:self-start -ml-14 sm:ml-[6px]"
+                    : "sm:self-end -ml-14 mr-[5px]"
                 }`}
               >
                 <div className="flex items-center gap-2 cursor-pointer">
