@@ -173,7 +173,7 @@ const page = () => {
       <div className="px-10 sm:px-16 mt-8">
         {/* earlier projects */}
         <div className="relative">
-          <div className="flex flex-col sm:flex-row justify-center sm:justify-between items-center  mx-[15rem] ">
+          <div className="flex flex-col gap-2 sm:flex-row justify-center sm:justify-between items-center sm:mx-[15rem] ">
             <div className="hidden sm:flex sm:w-[100px] sm:h-[auto] sm:-translate-x-[7rem] sm:cursor-pointer">
               {showSearchInput ? (
                 <input
@@ -184,7 +184,7 @@ const page = () => {
                   height={24}
                   onBlur={() => setShowSearchInput(false)}
                   onChange={handleSearch}
-                  className="border-b border-gray-400 outline-none text-base translate-x-[2rem]"
+                  className="border-b border-gray-400 outline-none text-base sm:translate-x-[2rem]"
                 />
               ) : (
                 <Search
@@ -195,22 +195,34 @@ const page = () => {
                 />
               )}
             </div>
-            <p className="text-4xl font-extrabold mb-4">Earlier projects</p>
-            <div className="flex gap-1 translate-x-20">
-              <label htmlFor="Sort">SORT:</label>
-              <select
-                name="sort"
-                id="sort"
-                className="text-sm outline-none"
-                value={sortTitle}
-                onChange={() =>
-                  setSortTitle(sortTitle === "asc" ? "desc" : "asc")
-                }
-              >
-                <option value="none">none</option>
-                <option value="asc">A - Z</option>
-                <option value="desc">Z - A</option>
-              </select>
+            <p className="text-4xl font-extrabold sm:mb-4">Earlier projects</p>
+            <div className="flex justify-between gap-14">
+              <div className="flex sm:hidden">
+                <input
+                  type="text"
+                  placeholder="Search"
+                  width={24}
+                  height={24}
+                  onChange={handleSearch}
+                  className="border-b border-gray-400 outline-none text-sm"
+                />
+              </div>
+              <div className="flex gap-1 sm:translate-x-20">
+                <label htmlFor="Sort">SORT:</label>
+                <select
+                  name="sort"
+                  id="sort"
+                  className="text-sm outline-none"
+                  value={sortTitle}
+                  onChange={() =>
+                    setSortTitle(sortTitle === "asc" ? "desc" : "asc")
+                  }
+                >
+                  <option value="none">none</option>
+                  <option value="asc">A - Z</option>
+                  <option value="desc">Z - A</option>
+                </select>
+              </div>
             </div>
           </div>
           <motion.div
