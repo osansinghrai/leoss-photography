@@ -205,7 +205,7 @@ const page = () => {
                       <button
                         onClick={() =>
                           handleImageClick({
-                            image: item.earlier_image_url,
+                            image: item.earlier_image_url || item.recent_image_url,
                             title: item.title,
                             description: item.description,
                           })
