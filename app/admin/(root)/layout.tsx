@@ -18,7 +18,7 @@ export default function RootLayout({
       <body className="overflow-x-hidden max-w-full ">
         <AdminHeader />
         <AdminSidebar />
-        <div className="ml-64 flex-1 p-8">{children}</div>
+        <div className="ml-64 flex-1 p-6">{children}</div>
       </body>
     </html>
   );
