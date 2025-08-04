@@ -9,10 +9,12 @@ datasource db {
 }
 
 model contact_page {
-  id        Int    @id @default(autoincrement())
-  name String @db.VarChar(255)
-  email     String @db.VarChar(255)
-  messages  String @db.VarChar(255)
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  purpose   String   @db.VarChar(255)
+  message   String   @db.Text
+  createdAt DateTime @default(now())
 }
 
 model experience_page {

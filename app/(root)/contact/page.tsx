@@ -1,15 +1,60 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Facebook, Github, Instagram, Linkedin } from "lucide-react";
+import { createMessage, CreateMessageData } from "../../api/services/contactService";
+import toast, { Toaster } from "react-hot-toast";
 
 const page = () => {
+  const [formData, setFormData] = useState<CreateMessageData>({
+    name: "",
+    email: "",
+    purpose: "",
+    message: ""
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const handleScrollContact = () => {
     window.scrollTo({ top: 1000, behavior: "smooth" });
   };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.purpose || !formData.message) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      await createMessage(formData);
+      toast.success("Message sent successfully!");
+      setFormData({
+        name: "",
+        email: "",
+        purpose: "",
+        message: ""
+      });
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Failed to send message");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <main>
+      <Toaster position="top-right" />
       <div className="relative flex w-full h-[54rem]">
         <div className="flex mx-10 sm:mx-18 mt-60 content-center items-center">
           <img
@@ -97,47 +142,61 @@ const page = () => {
             Great vision without great people is irrelevant.
           </p>
           <p className="text-gray-700">Let's work together!</p>
-          <div className="flex flex-col gap-[10px] mt-[10px] w-full sm:w-[26vw]">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-[10px] mt-[10px] w-full sm:w-[26vw]">
             <input
               type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
               aria-label="name"
               placeholder="Enter your name"
               className="border border-gray-400 text-gray-600 placeholder:text-gray-400 bg-white py-[6px] px-[10px] rounded-md focus:outline-none focus:ring-1 transition-all duration-300"
             />
             <input
-              type="text"
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
               aria-label="email"
               placeholder="Enter a valid email address"
               className="border border-gray-400 text-gray-600 placeholder:text-gray-400 bg-white py-[6px] px-[10px] rounded-md focus:outline-none focus:ring-1 transition-all duration-300"
             />
             <div>
-              <label htmlFor="booking">Purpose:</label>
+              <label htmlFor="purpose">Purpose:</label>
               <select
-                name="booking"
-                id="booking"
-                defaultValue=""
+                name="purpose"
+                id="purpose"
+                value={formData.purpose}
+                onChange={handleInputChange}
                 className="border border-gray-400 px-1 py-[2px] ml-2 bg-white text-gray-600 cursor-pointer focus:outline-none focus:ring-1 transition-all duration-300"
               >
-                <option value=""  disabled>
+                <option value="" disabled>
                   Select a purpose
                 </option>
-                <option value="GeneralInquiry">General Inquiry</option>
+                <option value="General Inquiry">General Inquiry</option>
                 <option value="Booking">Booking</option>
                 <option value="Collaboration">Collaboration</option>
               </select>
             </div>
             <textarea
               rows={3}
+              name="message"
+              value={formData.message}
+              onChange={handleInputChange}
               aria-label="message"
               placeholder="Enter your message"
               className="border border-gray-400 text-gray-600 placeholder:text-gray-400 bg-white py-1 px-[10px] rounded-md focus:outline-none focus:ring-1 transition-all duration-300"
             />
             <div className="mt-2">
-              <button className="border-2 border-black bg-black px-6 py-[8px] rounded-lg text-sm text-white hover:transition-all hover:duration-400 hover:scale-105 active:scale-98 cursor-pointer">
-                Submit
+              <button 
+                type="submit"
+                disabled={isSubmitting}
+                className="border-2 border-black bg-black px-6 py-[8px] rounded-lg text-sm text-white hover:transition-all hover:duration-400 hover:scale-105 active:scale-98 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? "Sending..." : "Submit"}
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </main>
