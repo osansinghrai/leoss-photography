@@ -143,18 +143,12 @@ export async function PATCH(req) {
         earlierBase64 = `data:${
           earlierImage.type
         };base64,${earlierBuffer.toString("base64")}`;
-        earlierUpload = await cloudinary.uploader.upload(earlierBase64, {
-          folder: "portfolio_images",
-        });
       }
       if (recentImage) {
         const recentBuffer = Buffer.from(await recentImage.arrayBuffer());
         recentBase64 = `data:${recentImage.type};base64,${recentBuffer.toString(
           "base64"
         )}`;
-        recentUpload = await cloudinary.uploader.upload(recentBase64, {
-          folder: "portfolio_images",
-        });
       }
     } else {
       const body = await req.json();
@@ -164,54 +158,41 @@ export async function PATCH(req) {
       earlierBase64 = body.earlier_image_url;
       recentBase64 = body.recent_image_url;
     }
+    
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
-    let earlierUpload = null;
-    let recentUpload = null;
+    // Prepare update data
+    const updateData = {
+      title,
+      description,
+    };
 
+    // Only handle image uploads if new images are provided
     if (earlierBase64) {
-      earlierUpload = await cloudinary.uploader.upload(earlierBase64, {
+      const earlierUpload = await cloudinary.uploader.upload(earlierBase64, {
         folder: "portfolio_images",
       });
+      updateData.earlier_image_url = earlierUpload.secure_url;
+      updateData.earlier_image_public_id = earlierUpload.public_id;
     }
+    
     if (recentBase64) {
-      recentUpload = await cloudinary.uploader.upload(recentBase64, {
+      const recentUpload = await cloudinary.uploader.upload(recentBase64, {
         folder: "portfolio_images",
       });
+      updateData.recent_image_url = recentUpload.secure_url;
+      updateData.recent_image_public_id = recentUpload.public_id;
     }
 
     const UpdatePortfolio = await prisma.portfolio_page.update({
       where: { id: Number(id) },
-      data: {
-        title,
-        description,
-        earlier_image_url: earlierBase64
-          ? earlierUpload
-            ? earlierUpload.secure_url
-            : ""
-          : null,
-        recent_image_url: recentBase64
-          ? recentUpload
-            ? recentUpload.secure_url
-            : ""
-          : null,
-        earlier_image_public_id: earlierBase64
-          ? earlierUpload
-            ? earlierUpload.public_id
-            : ""
-          : null,
-        recent_image_public_id: recentBase64
-          ? recentUpload
-            ? recentUpload.public_id
-            : ""
-          : null,
-      },
+      data: updateData,
     });
-    return NextResponse.json(UpdatePortfolio, { status: 201 });
+    return NextResponse.json(UpdatePortfolio, { status: 200 });
   } catch (error) {
-    console.error("Post error:", error);
+    console.error("Patch error:", error);
     return NextResponse.json(
       { error: "Failed to update portfolio" },
       { status: 500 }
