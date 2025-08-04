@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Toast } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 interface sectionProps {
   id: number;
@@ -77,24 +77,36 @@ const page = () => {
       setSection(finalItems);
 
       console.log("Successfully saved:", savedItem);
+      toast.success("Content updated successfully");
     } catch (error) {
       console.error("Error saving:", error);
       setSection(section);
-      setEditingId(id); 
-      alert("Failed to save changes. Please try again.");
+      setEditingId(id);
     }
   };
 
   // Delete
   const handleDelete = async (id: number) => {
-    const newItems = section.filter((i) => i.id !== id);
-    setSection(newItems);
+    try {
+      const newItems = section.filter((i) => i.id !== id);
+      setSection(newItems);
 
-    await fetch(`${apiBaseUrl}/api/routes/portfolio`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
+      const response = await fetch(`${apiBaseUrl}/api/routes/portfolio`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete portfolio");
+      }
+
+      toast.success("Content deleted successfully");
+    } catch (error) {
+      console.error("Error deleting:", error);
+      // Revert optimistic update on error
+      setSection(section);
+    }
   };
 
   if (loading) {
@@ -107,6 +119,22 @@ const page = () => {
 
   return (
     <main>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 3000,
+          style: {
+            background: "#fff",
+            color: "#000",
+          },
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 4000,
+          },
+        }}
+      />
       <div className="flex justify-between items-center">
         <div></div>
         <h1 className="text-2xl">Manage portfolio</h1>
