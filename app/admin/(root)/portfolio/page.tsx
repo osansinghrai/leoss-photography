@@ -260,13 +260,13 @@ const page = () => {
                   />
                   <div className="flex justify-evenly gap-2">
                     <button
-                      className="bg-gray-300 px-2 py-1 rounded"
+                      className="bg-gray-300 px-2 py-1 rounded cursor-pointer"
                       onClick={() => setEditingId(null)}
                     >
                       Cancel
                     </button>
                     <button
-                      className="bg-green-500 text-white px-2 py-1 rounded"
+                      className="bg-green-500 text-white px-2 py-1 rounded cursor-pointer"
                       onClick={() => handleSave(item.id)}
                     >
                       Save

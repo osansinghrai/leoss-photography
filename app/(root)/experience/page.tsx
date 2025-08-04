@@ -250,7 +250,9 @@ const page = () => {
             }}
             className="flex flex-col gap-8"
           >
-            {sections.map((sections, index) => (
+            {sections
+              .sort((a, b) => parseInt(b.year) - parseInt(a.year))
+              .map((sections, index) => (
               <motion.div
                 variants={itemVariants}
                 transition={{ duration: 0.8 }}
