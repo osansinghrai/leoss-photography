@@ -23,7 +23,7 @@ export async function GET() {
 export async function POST(req) {
   try {
     const contentType = req.headers.get("content-type");
-    let title, description, earlierBase64, recentBase64;
+    let title, description, earlierUpload = null, recentUpload = null;
 
     if (contentType?.includes("multipart/form-data")) {
       const formData = await req.formData();
@@ -36,7 +36,7 @@ export async function POST(req) {
 
       if (earlierImage) {
         const earlierBuffer = Buffer.from(await earlierImage.arrayBuffer());
-        earlierBase64 = `data:${
+        const earlierBase64 = `data:${
           earlierImage.type
         };base64,${earlierBuffer.toString("base64")}`;
         earlierUpload = await cloudinary.uploader.upload(earlierBase64, {
@@ -45,7 +45,7 @@ export async function POST(req) {
       }
       if (recentImage) {
         const recentBuffer = Buffer.from(await recentImage.arrayBuffer());
-        recentBase64 = `data:${recentImage.type};base64,${recentBuffer.toString(
+        const recentBase64 = `data:${recentImage.type};base64,${recentBuffer.toString(
           "base64"
         )}`;
         recentUpload = await cloudinary.uploader.upload(recentBase64, {
@@ -56,9 +56,19 @@ export async function POST(req) {
       const body = await req.json();
       title = body.title;
       description = body.description;
-      earlierBase64 = body.earlier_image_url;
-      recentBase64 = body.recent_image_url;
+      
+      if (body.earlier_image_url) {
+        earlierUpload = await cloudinary.uploader.upload(body.earlier_image_url, {
+          folder: "portfolio_images",
+        });
+      }
+      if (body.recent_image_url) {
+        recentUpload = await cloudinary.uploader.upload(body.recent_image_url, {
+          folder: "portfolio_images",
+        });
+      }
     }
+    
     if (!title || !description) {
       return NextResponse.json(
         { error: "All fields are required" },
@@ -66,51 +76,21 @@ export async function POST(req) {
       );
     }
 
-    if (!earlierBase64 && !recentBase64) {
+    if (!earlierUpload && !recentUpload) {
       return NextResponse.json(
-        { error: "Atleast one image is required" },
+        { error: "At least one image is required" },
         { status: 400 }
       );
-    }
-
-    let earlierUpload = null;
-    let recentUpload = null;
-
-    if (earlierBase64) {
-      earlierUpload = await cloudinary.uploader.upload(earlierBase64, {
-        folder: "portfolio_images",
-      });
-    }
-    if (recentBase64) {
-      recentUpload = await cloudinary.uploader.upload(recentBase64, {
-        folder: "portfolio_images",
-      });
     }
 
     const newPortfolio = await prisma.portfolio_page.create({
       data: {
         title,
         description,
-        earlier_image_url: earlierBase64
-          ? earlierUpload
-            ? earlierUpload.secure_url
-            : ""
-          : null,
-        recent_image_url: recentBase64
-          ? recentUpload
-            ? recentUpload.secure_url
-            : ""
-          : null,
-        earlier_image_public_id: earlierBase64
-          ? earlierUpload
-            ? earlierUpload.public_id
-            : ""
-          : null,
-        recent_image_public_id: recentBase64
-          ? recentUpload
-            ? recentUpload.public_id
-            : ""
-          : null,
+        earlier_image_url: earlierUpload ? earlierUpload.secure_url : null,
+        recent_image_url: recentUpload ? recentUpload.secure_url : null,
+        earlier_image_public_id: earlierUpload ? earlierUpload.public_id : null,
+        recent_image_public_id: recentUpload ? recentUpload.public_id : null,
       },
     });
     return NextResponse.json(newPortfolio, { status: 201 });

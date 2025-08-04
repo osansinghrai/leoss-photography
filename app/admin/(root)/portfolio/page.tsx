@@ -22,6 +22,14 @@ const page = () => {
   const [section, setSection] = useState<sectionProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<ImageProps | null>(null);
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [createForm, setCreateForm] = useState({
+    title: "",
+    description: "",
+    earlier_image: null as File | null,
+    recent_image: null as File | null,
+  });
+  const [isCreating, setIsCreating] = useState(false);
 
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editValues, setEditValues] = useState<{
@@ -88,9 +96,14 @@ const page = () => {
   // Delete
   const handleDelete = async (id: number) => {
     try {
+      // Optimistic update - immediately remove from UI
       const newItems = section.filter((i) => i.id !== id);
       setSection(newItems);
 
+      // Show success toast immediately
+      toast.success("Content deleted successfully");
+
+      // Make API call in background
       const response = await fetch(`${apiBaseUrl}/api/routes/portfolio`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -100,13 +113,80 @@ const page = () => {
       if (!response.ok) {
         throw new Error("Failed to delete portfolio");
       }
-
-      toast.success("Content deleted successfully");
     } catch (error) {
       console.error("Error deleting:", error);
-      // Revert optimistic update on error
+      // Revert optimistic update on error and show error toast
       setSection(section);
+      toast.error("Failed to delete portfolio");
     }
+  };
+
+  // Create portfolio
+  const handleCreatePortfolio = async () => {
+    if (!createForm.title || !createForm.description) {
+      toast.error("Title and description are required");
+      return;
+    }
+
+    if (!createForm.earlier_image && !createForm.recent_image) {
+      toast.error("At least one image is required");
+      return;
+    }
+
+    setIsCreating(true);
+    try {
+      const formData = new FormData();
+      formData.append("title", createForm.title);
+      formData.append("description", createForm.description);
+
+      if (createForm.earlier_image) {
+        formData.append("earlier_image_url", createForm.earlier_image);
+      }
+      if (createForm.recent_image) {
+        formData.append("recent_image_url", createForm.recent_image);
+      }
+
+      const response = await fetch(`${apiBaseUrl}/api/routes/portfolio`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Failed to create portfolio");
+      }
+
+      const newPortfolio = await response.json();
+      setSection([...section, newPortfolio]);
+
+      // Reset form
+      setCreateForm({
+        title: "",
+        description: "",
+        earlier_image: null,
+        recent_image: null,
+      });
+      setShowCreateModal(false);
+
+      toast.success("Portfolio created successfully");
+    } catch (error) {
+      console.error("Error creating portfolio:", error);
+      toast.error(
+        error instanceof Error ? error.message : "Failed to create portfolio"
+      );
+    } finally {
+      setIsCreating(false);
+    }
+  };
+
+  const handleFileChange = (
+    field: "earlier_image" | "recent_image",
+    file: File | null
+  ) => {
+    setCreateForm((prev) => ({
+      ...prev,
+      [field]: file,
+    }));
   };
 
   if (loading) {
@@ -138,7 +218,10 @@ const page = () => {
       <div className="flex justify-between items-center">
         <div></div>
         <h1 className="text-2xl">Manage portfolio</h1>
-        <button className="font-black border border-gray-400 px-[10px] py-1 rounded-md cursor-pointer transition-all duration-500 hover:bg-[#569f5b] hover:text-white active:scale-95">
+        <button
+          onClick={() => setShowCreateModal(true)}
+          className="font-black border border-gray-400 px-[10px] py-1 rounded-md cursor-pointer transition-all duration-500 hover:bg-[#569f5b] hover:text-white active:scale-95"
+        >
           Create portfolio
         </button>
       </div>
@@ -205,7 +288,8 @@ const page = () => {
                       <button
                         onClick={() =>
                           handleImageClick({
-                            image: item.earlier_image_url || item.recent_image_url,
+                            image:
+                              item.earlier_image_url || item.recent_image_url,
                             title: item.title,
                             description: item.description,
                           })
@@ -238,6 +322,162 @@ const page = () => {
           </div>
         ))}
       </div>
+
+      {/* Create Portfolio Modal */}
+      {showCreateModal && (
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 flex flex-col justify-center items-center bg-black/60 backdrop-blur-[2px] px-6 sm:px-0">
+            <div className="relative bg-white rounded-2xl p-6 max-w-md w-full max-h-[80vh] overflow-auto">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-bold">Create New Portfolio</h2>
+                <button
+                  onClick={() => setShowCreateModal(false)}
+                  className="text-gray-500 hover:text-gray-700 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleCreatePortfolio();
+                }}
+              >
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Title *
+                  </label>
+                  <input
+                    type="text"
+                    value={createForm.title}
+                    onChange={(e) =>
+                      setCreateForm((prev) => ({
+                        ...prev,
+                        title: e.target.value,
+                      }))
+                    }
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#569f5b]"
+                    placeholder="Enter portfolio title"
+                    required
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Description *
+                  </label>
+                  <textarea
+                    value={createForm.description}
+                    onChange={(e) =>
+                      setCreateForm((prev) => ({
+                        ...prev,
+                        description: e.target.value,
+                      }))
+                    }
+                    className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#569f5b]"
+                    placeholder="Enter portfolio description"
+                    rows={3}
+                    required
+                  />
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Earlier Image
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleFileChange(
+                          "earlier_image",
+                          e.target.files?.[0] || null
+                        )
+                      }
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#569f5b] file:hidden"
+                      id="earlier-image-input"
+                    />
+                    <label
+                      htmlFor="earlier-image-input"
+                      className="absolute inset-0 flex items-center justify-center cursor-pointer bg-gray-50 hover:bg-gray-100 border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-600"
+                    >
+                      {createForm.earlier_image
+                        ? createForm.earlier_image.name
+                        : "Choose file"}
+                    </label>
+                    {createForm.earlier_image && (
+                      <button
+                        type="button"
+                        onClick={() => handleFileChange("earlier_image", null)}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-red-500 hover:text-red-700 text-sm"
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Recent Image
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        handleFileChange(
+                          "recent_image",
+                          e.target.files?.[0] || null
+                        )
+                      }
+                      className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#569f5b] file:hidden"
+                      id="recent-image-input"
+                    />
+                    <label
+                      htmlFor="recent-image-input"
+                      className="absolute inset-0 flex items-center justify-center cursor-pointer bg-gray-50 hover:bg-gray-100 border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-600"
+                    >
+                      {createForm.recent_image
+                        ? createForm.recent_image.name
+                        : "Choose file"}
+                    </label>
+                    {createForm.recent_image && (
+                      <button
+                        type="button"
+                        onClick={() => handleFileChange("recent_image", null)}
+                        className="absolute right-2 top-1/2 transform -translate-y-1/2 text-red-500 hover:text-red-700 text-sm"
+                      >
+                        ×
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setShowCreateModal(false)}
+                    className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isCreating}
+                    className="px-4 py-2 bg-[#569f5b] text-white rounded-md hover:bg-[#4a8a4f] disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isCreating ? "Creating..." : "Create Portfolio"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
       {selectedImage && (
         <div onClick={closeModal} className="fixed inset-0 z-50">
           <div className="absolute inset-0 flex flex-col  justify-center items-center bg-black/60 backdrop-blur-[2px] px-6 sm:px-0">
