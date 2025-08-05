@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-
-const { PrismaClient } = require("../../../generated/prisma");
+import { PrismaClient } from "@prisma/client";
 import cloudinary from "@/lib/config/cloudinary";
 
 const prisma = new PrismaClient();
