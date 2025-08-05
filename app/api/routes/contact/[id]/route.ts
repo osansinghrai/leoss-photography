@@ -1,17 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';  // <-- Check this import path
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const id = params.id; // Assuming id is string (UUID), remove parseInt()
+    const { id } = await params;
+    const numericId = parseInt(id, 10);
+
+    if (isNaN(numericId)) {
+      return NextResponse.json({ error: 'Invalid ID format' }, { status: 400 });
+    }
 
     const existingMessage = await prisma.contact_page.findUnique({
-      where: { id }
+      where: { id: numericId }
     });
 
     if (!existingMessage) {
@@ -19,7 +24,7 @@ export async function DELETE(
     }
 
     await prisma.contact_page.delete({
-      where: { id }
+      where: { id: numericId }
     });
 
     return NextResponse.json({ message: 'Message deleted successfully' }, { status: 200 });
