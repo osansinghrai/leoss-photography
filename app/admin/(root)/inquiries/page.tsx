@@ -226,7 +226,7 @@ const InquiriesPage = () => {
                 </h2>
                 <button
                   onClick={() => setSelectedMessage(null)}
-                  className="text-gray-400 hover:text-gray-600 text-2xl"
+                  className="text-gray-400 hover:text-gray-600 text-2xl cursor-pointer"
                 >
                   ×
                 </button>
